@@ -299,6 +299,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-010 — Unit of Work SQLAlchemy e providers de injeção de dependência
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-97`
 - **Tipo**: infra
@@ -485,6 +486,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-016 — Série mensal de despesas
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-32`, `SEA-33`, `SEA-34`, `SEA-54`, `SEA-62`
 - **Tipo**: lógica-negócio
@@ -512,6 +514,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-017 — Detecção de anomalias por IQR
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-28`, `SEA-29`, `SEA-54`, `SEA-58`, `SEA-59`, `SEA-96`
 - **Tipo**: lógica-negócio
