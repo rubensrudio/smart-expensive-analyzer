@@ -177,3 +177,14 @@ Etapa: gate de clarificação do spec (spec-writer, 1ª passada) · Data: 2026-0
 - **Recomendação do orquestrador**: A
 - **Escolha**: A
 - **Observações**: o `pytest.ini` passa a ser a fonte da config do pytest, e o `[tool.pytest.ini_options]` do pyproject (TASK-001) fica ignorado. Requer atualização de plan (seção de comandos/ambiente): a verificação roda com `.venv/bin` no PATH.
+
+### LAC-22 — `amount` fora do limite de NUMERIC(14,2) (etapa: /implement, TASK-014, hm-engineer)
+- **Data**: 2026-09-26
+- **Opções apresentadas**: A) rejeitar a linha em `parse_row` com o motivo existente "valor não numérico" quando |amount| >= 10^12 B) criar o motivo novo "valor fora do limite" (muda o catálogo 8.3) C) não validar na TASK-014 (a importação falharia com 500, contrariando SEA-41)
+- **Recomendação do hm-engineer**: A (Jev e4_contract p=0.85: é lacuna)
+- **Escolha**: A
+- **Observações**: o catálogo e os contratos não mudam. Nota para o plan (P-03): documentar que |amount| >= 10^12 vira "valor não numérico". Decisão incerta registrada pelo implementador, sem consulta ao humano: ".5" e "1." são rejeitados como "valor não numérico" (Jev e3_implied p=0.52, aplicado o lado estrito).
+
+### ENV-01 (adendo) — Testcontainers com colima
+- **Data**: 2026-09-26
+- **Observação**: os testes de integração exigem `TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock` nesta máquina (Docker via colima). O run.py roda com essa variável, além de `.venv/bin` no PATH e `PYTHONPATH=.`.
