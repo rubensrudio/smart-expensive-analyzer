@@ -50,6 +50,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-002 — Configuração por variáveis de ambiente e logging
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-03`, `SEA-108`, `SEA-58`, `SEA-59`
 - **Tipo**: config
@@ -81,6 +82,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-003 — Erros de domínio e tratamento centralizado de exceções
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-05`, `SEA-06`, `SEA-97`, `SEA-100`
 - **Tipo**: infra
@@ -111,6 +113,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-004 — Modelos ORM e fábrica de sessão
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-09`, `SEA-39`
 - **Tipo**: infra
@@ -174,6 +177,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-006 — Entidades de domínio e portas (repositórios e Unit of Work)
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-39`
 - **Tipo**: lógica-negócio

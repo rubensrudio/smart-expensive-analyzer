@@ -1,6 +1,6 @@
 # STATUS — initial_feature
 
-Atualizado em 2026-09-26T20:01:56 · integradora `feature/initial_feature-integration` · baseline `develop@0ac7131` (2026-09-26)
+Atualizado em 2026-09-26T20:08:27 · integradora `feature/initial_feature-integration` · baseline `develop@0ac7131` (2026-09-26)
 
 ## Baseline
 
@@ -16,7 +16,7 @@ Atualizado em 2026-09-26T20:01:56 · integradora `feature/initial_feature-integr
 | Onda | Tasks | Gate | Gatilhos | QA |
 |---|---|---|---|---|
 | 1 | TASK-001 | ✅ ⚠️cego | G4 | PADRAO: APROVADO |
-| 2 | TASK-002, TASK-003, TASK-004, TASK-006 | — | — | — |
+| 2 | TASK-002, TASK-003, TASK-004, TASK-006 | ✅ ⚠️cego | G4 | PADRAO: APROVADO |
 | 3 | TASK-005, TASK-011, TASK-013, TASK-015 | — | — | — |
 | 4 | TASK-007, TASK-008, TASK-009, TASK-014 | — | — | — |
 | 5 | TASK-010, TASK-016, TASK-017 | — | — | — |
@@ -36,11 +36,11 @@ Atualizado em 2026-09-26T20:01:56 · integradora `feature/initial_feature-integr
 | Task | Status | Risco | Rodadas rev/gate/qa | Nota |
 |---|---|---|---|---|
 | TASK-001 | ✅ APROVADA | médio | 0/0/0 |  |
-| TASK-002 |  PENDENTE | médio | 0/0/0 |  |
-| TASK-003 |  PENDENTE | médio | 0/0/0 |  |
-| TASK-004 |  PENDENTE | médio | 0/0/0 |  |
+| TASK-002 | ✅ APROVADA | médio | 0/0/0 |  |
+| TASK-003 | ✅ APROVADA | médio | 0/0/0 |  |
+| TASK-004 | ✅ APROVADA | médio | 0/0/0 |  |
 | TASK-005 |  PENDENTE | médio | 0/0/0 |  |
-| TASK-006 |  PENDENTE | médio | 0/0/0 |  |
+| TASK-006 | ✅ APROVADA | médio | 0/0/0 |  |
 | TASK-007 |  PENDENTE | médio | 0/0/0 |  |
 | TASK-008 |  PENDENTE | médio | 0/0/0 |  |
 | TASK-009 |  PENDENTE | médio | 0/0/0 |  |
@@ -70,8 +70,8 @@ Atualizado em 2026-09-26T20:01:56 · integradora `feature/initial_feature-integr
 
 ## Métricas
 
-- Aprovadas: 1/32 · bloqueadas: 0
-- Aprovadas em 1ª rodada: 1/1
-- Ondas fechadas: 1 · QA semântico invocado em 1
+- Aprovadas: 5/32 · bloqueadas: 0
+- Aprovadas em 1ª rodada: 5/5
+- Ondas fechadas: 2 · QA semântico invocado em 2
 - Regressões capturadas pelo gate mecânico: 0
 - Testes e2e de regressão criados a partir de achados do QA: 0
