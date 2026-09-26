@@ -1,0 +1,36 @@
+# Environment and local secrets
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Tests, coverage and static analysis
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+reports/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local planning artifacts
+.specs/
