@@ -32,5 +32,4 @@ reports/
 *.swp
 *.swo
 
-# Local planning artifacts
-.specs/
+reports/

@@ -1,0 +1,1657 @@
+{
+ "versao": 2,
+ "feature": "initial_feature",
+ "gerado_em": "2026-09-26T19:28:27",
+ "hashes": {
+  "plan": "f2117cdf238f4a54",
+  "tasks": "0a35aafb39602c5e"
+ },
+ "comandos": [
+  {
+   "alvo": "lint",
+   "dir": ".",
+   "cmd": "ruff check . --output-format=concise",
+   "relatorio": null
+  },
+  {
+   "alvo": "typecheck",
+   "dir": ".",
+   "cmd": "mypy app",
+   "relatorio": null
+  },
+  {
+   "alvo": "test",
+   "dir": ".",
+   "cmd": "pytest -q",
+   "relatorio": "reports/junit.xml"
+  },
+  {
+   "alvo": "test_related",
+   "dir": ".",
+   "cmd": "pytest -q {files}",
+   "relatorio": "reports/junit.xml"
+  },
+  {
+   "alvo": "build",
+   "dir": ".",
+   "cmd": "docker compose build api",
+   "relatorio": null
+  }
+ ],
+ "historias_p1": {
+  "P1: Ambiente reproduzível e pipeline de CI": [
+   "SEA-01",
+   "SEA-02",
+   "SEA-03",
+   "SEA-04",
+   "SEA-05",
+   "SEA-06",
+   "SEA-35",
+   "SEA-108"
+  ],
+  "P1: Importar CSV e consultar transações": [
+   "SEA-07",
+   "SEA-08",
+   "SEA-09",
+   "SEA-10",
+   "SEA-11",
+   "SEA-12",
+   "SEA-13",
+   "SEA-14",
+   "SEA-90",
+   "SEA-91",
+   "SEA-92",
+   "SEA-93",
+   "SEA-94",
+   "SEA-97",
+   "SEA-98",
+   "SEA-36",
+   "SEA-37",
+   "SEA-38",
+   "SEA-39",
+   "SEA-40",
+   "SEA-41",
+   "SEA-42",
+   "SEA-43",
+   "SEA-44",
+   "SEA-45",
+   "SEA-67",
+   "SEA-68",
+   "SEA-102",
+   "SEA-103",
+   "SEA-104",
+   "SEA-105",
+   "SEA-106",
+   "SEA-107",
+   "SEA-110"
+  ],
+  "P1: Categorização automática por regras configuráveis": [
+   "SEA-15",
+   "SEA-16",
+   "SEA-17",
+   "SEA-18",
+   "SEA-19",
+   "SEA-46",
+   "SEA-47",
+   "SEA-48",
+   "SEA-49",
+   "SEA-50",
+   "SEA-51",
+   "SEA-52",
+   "SEA-53"
+  ],
+  "P1: Estatísticas e resumos de gastos": [
+   "SEA-20",
+   "SEA-21",
+   "SEA-22",
+   "SEA-23",
+   "SEA-24",
+   "SEA-25",
+   "SEA-26",
+   "SEA-95",
+   "SEA-99",
+   "SEA-100",
+   "SEA-101",
+   "SEA-54",
+   "SEA-55",
+   "SEA-56",
+   "SEA-57"
+  ],
+  "P1: Lista de possíveis anomalias": [
+   "SEA-27",
+   "SEA-28",
+   "SEA-29",
+   "SEA-30",
+   "SEA-31",
+   "SEA-96",
+   "SEA-58",
+   "SEA-59",
+   "SEA-60"
+  ]
+ },
+ "tasks": {
+  "TASK-001": {
+   "titulo": "Fundação do projeto e códigos de moeda ISO 4217",
+   "tipo": "infra",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "unit",
+   "depende_de": [],
+   "producao": [
+    "pyproject.toml",
+    "app/domain/currency.py"
+   ],
+   "teste": [
+    "tests/unit/domain/test_currency.py"
+   ],
+   "wiring": [
+    ".venv/",
+    "__pycache__/",
+    "reports/",
+    ".mypy_cache/",
+    ".ruff_cache/",
+    ".pytest_cache/",
+    "app/__init__.py",
+    "app/core/__init__.py",
+    "app/domain/__init__.py",
+    "app/api/__init__.py",
+    "app/api/routers/__init__.py",
+    "app/api/schemas/__init__.py",
+    "app/application/__init__.py",
+    "app/application/services/__init__.py",
+    "app/infrastructure/__init__.py",
+    "app/infrastructure/db/__init__.py",
+    "app/infrastructure/db/repositories/__init__.py"
+   ],
+   "contratos": [
+    "CT-2"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-04",
+    "SEA-38",
+    "SEA-108"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-002": {
+   "titulo": "Configuração por variáveis de ambiente e logging",
+   "tipo": "config",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "unit",
+   "depende_de": [
+    "TASK-001"
+   ],
+   "producao": [
+    "app/core/config.py",
+    "app/core/logging.py"
+   ],
+   "teste": [
+    "tests/unit/core/test_config.py",
+    "tests/unit/core/test_logging.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-1",
+    "CT-2"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-03",
+    "SEA-108",
+    "SEA-58",
+    "SEA-59"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-003": {
+   "titulo": "Erros de domínio e tratamento centralizado de exceções",
+   "tipo": "infra",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "unit",
+   "depende_de": [
+    "TASK-001"
+   ],
+   "producao": [
+    "app/core/errors.py",
+    "app/api/errors.py"
+   ],
+   "teste": [
+    "tests/unit/api/test_errors.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-3"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-05",
+    "SEA-06",
+    "SEA-97",
+    "SEA-100"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-004": {
+   "titulo": "Modelos ORM e fábrica de sessão",
+   "tipo": "infra",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "unit",
+   "depende_de": [
+    "TASK-001"
+   ],
+   "producao": [
+    "app/infrastructure/db/models.py",
+    "app/infrastructure/db/session.py"
+   ],
+   "teste": [
+    "tests/unit/infrastructure/test_models.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-4"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-09",
+    "SEA-39"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-005": {
+   "titulo": "Migration inicial Alembic e fixtures de integração",
+   "tipo": "migration",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "integration",
+   "depende_de": [
+    "TASK-002",
+    "TASK-004"
+   ],
+   "producao": [
+    "alembic/env.py",
+    "alembic/versions/0001_initial_schema.py"
+   ],
+   "teste": [
+    "tests/integration/conftest.py",
+    "tests/integration/test_migrations.py"
+   ],
+   "wiring": [
+    "alembic.ini",
+    "sqlalchemy.url",
+    "alembic/script.py.mako"
+   ],
+   "contratos": [
+    "CT-1",
+    "CT-23",
+    "CT-4",
+    "CT-5"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-01",
+    "SEA-52"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-006": {
+   "titulo": "Entidades de domínio e portas (repositórios e Unit of Work)",
+   "tipo": "lógica-negócio",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "unit",
+   "depende_de": [
+    "TASK-001"
+   ],
+   "producao": [
+    "app/domain/entities.py",
+    "app/domain/ports.py"
+   ],
+   "teste": [
+    "tests/unit/domain/test_entities.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-6",
+    "CT-7"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-39"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-007": {
+   "titulo": "Repositórios SQLAlchemy de Category e CategorizationRule",
+   "tipo": "crud-padrão",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "integration",
+   "depende_de": [
+    "TASK-004",
+    "TASK-005",
+    "TASK-006"
+   ],
+   "producao": [
+    "app/infrastructure/db/repositories/categories.py",
+    "app/infrastructure/db/repositories/categorization_rules.py"
+   ],
+   "teste": [
+    "tests/integration/repositories/test_category_repositories.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-23",
+    "CT-4",
+    "CT-5",
+    "CT-6",
+    "CT-7",
+    "CT-8"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-47",
+    "SEA-48",
+    "SEA-51",
+    "SEA-53"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-008": {
+   "titulo": "Repositório SQLAlchemy de Transaction",
+   "tipo": "crud-padrão",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "integration",
+   "depende_de": [
+    "TASK-004",
+    "TASK-005",
+    "TASK-006"
+   ],
+   "producao": [
+    "app/infrastructure/db/repositories/transactions.py"
+   ],
+   "teste": [
+    "tests/integration/repositories/test_transaction_repository.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-23",
+    "CT-24",
+    "CT-4",
+    "CT-5",
+    "CT-6",
+    "CT-7"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-11",
+    "SEA-13",
+    "SEA-21",
+    "SEA-25",
+    "SEA-39",
+    "SEA-44",
+    "SEA-67",
+    "SEA-68",
+    "SEA-101",
+    "SEA-106"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-009": {
+   "titulo": "Repositórios SQLAlchemy de Import e Anomaly",
+   "tipo": "crud-padrão",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "integration",
+   "depende_de": [
+    "TASK-004",
+    "TASK-005",
+    "TASK-006"
+   ],
+   "producao": [
+    "app/infrastructure/db/repositories/imports.py",
+    "app/infrastructure/db/repositories/anomalies.py"
+   ],
+   "teste": [
+    "tests/integration/repositories/test_import_anomaly_repositories.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-23",
+    "CT-25",
+    "CT-4",
+    "CT-5",
+    "CT-6",
+    "CT-7"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-27",
+    "SEA-30",
+    "SEA-31",
+    "SEA-41",
+    "SEA-43",
+    "SEA-107"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-010": {
+   "titulo": "Unit of Work SQLAlchemy e providers de injeção de dependência",
+   "tipo": "infra",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "integration",
+   "depende_de": [
+    "TASK-002",
+    "TASK-005",
+    "TASK-007",
+    "TASK-008",
+    "TASK-009"
+   ],
+   "producao": [
+    "app/infrastructure/db/unit_of_work.py",
+    "app/api/deps.py"
+   ],
+   "teste": [
+    "tests/integration/test_unit_of_work.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-1",
+    "CT-23",
+    "CT-24",
+    "CT-25",
+    "CT-7",
+    "CT-8",
+    "CT-9"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-97"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-011": {
+   "titulo": "Parâmetros comuns da API (período, paginação) e schemas compartilhados",
+   "tipo": "lógica-negócio",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "unit",
+   "depende_de": [
+    "TASK-003",
+    "TASK-006"
+   ],
+   "producao": [
+    "app/api/params.py",
+    "app/api/schemas/common.py"
+   ],
+   "teste": [
+    "tests/unit/api/test_params.py",
+    "tests/unit/api/test_common_schemas.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-22",
+    "CT-3",
+    "CT-6"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-11",
+    "SEA-13",
+    "SEA-40",
+    "SEA-57",
+    "SEA-67",
+    "SEA-99",
+    "SEA-100",
+    "SEA-105"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-012": {
+   "titulo": "Factory da aplicação FastAPI",
+   "tipo": "infra",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "integration",
+   "depende_de": [
+    "TASK-002",
+    "TASK-003",
+    "TASK-005",
+    "TASK-010"
+   ],
+   "producao": [
+    "app/main.py"
+   ],
+   "teste": [
+    "tests/integration/api/test_app.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-1",
+    "CT-23",
+    "CT-26",
+    "CT-3",
+    "CT-4",
+    "CT-9"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-02"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-013": {
+   "titulo": "Normalização de texto e casamento de regras de categorização",
+   "tipo": "lógica-negócio",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "unit",
+   "depende_de": [
+    "TASK-006"
+   ],
+   "producao": [
+    "app/domain/text.py",
+    "app/domain/categorization.py"
+   ],
+   "teste": [
+    "tests/unit/domain/test_text.py",
+    "tests/unit/domain/test_categorization.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-10",
+    "CT-11",
+    "CT-6"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-09",
+    "SEA-17",
+    "SEA-19",
+    "SEA-46",
+    "SEA-47",
+    "SEA-52"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-014": {
+   "titulo": "Leitura do CSV e validação por linha",
+   "tipo": "lógica-negócio",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "unit",
+   "depende_de": [
+    "TASK-001",
+    "TASK-003",
+    "TASK-006",
+    "TASK-013"
+   ],
+   "producao": [
+    "app/infrastructure/csv_reader.py",
+    "app/domain/csv_rows.py"
+   ],
+   "teste": [
+    "tests/unit/infrastructure/test_csv_reader.py",
+    "tests/unit/domain/test_csv_rows.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-10",
+    "CT-12",
+    "CT-2",
+    "CT-3",
+    "CT-6"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-09",
+    "SEA-10",
+    "SEA-36",
+    "SEA-37",
+    "SEA-38",
+    "SEA-39",
+    "SEA-41",
+    "SEA-90",
+    "SEA-91",
+    "SEA-92",
+    "SEA-110"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-015": {
+   "titulo": "Estatísticas descritivas, histograma e percentuais",
+   "tipo": "lógica-negócio",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "unit",
+   "depende_de": [
+    "TASK-006"
+   ],
+   "producao": [
+    "app/domain/statistics.py"
+   ],
+   "teste": [
+    "tests/unit/domain/test_statistics.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-13",
+    "CT-6"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-20",
+    "SEA-22",
+    "SEA-26",
+    "SEA-54",
+    "SEA-55",
+    "SEA-56"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-016": {
+   "titulo": "Série mensal de despesas",
+   "tipo": "lógica-negócio",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "unit",
+   "depende_de": [
+    "TASK-006",
+    "TASK-015"
+   ],
+   "producao": [
+    "app/domain/monthly_series.py"
+   ],
+   "teste": [
+    "tests/unit/domain/test_monthly_series.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-13",
+    "CT-14",
+    "CT-6"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-32",
+    "SEA-33",
+    "SEA-34",
+    "SEA-54",
+    "SEA-62"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-017": {
+   "titulo": "Detecção de anomalias por IQR",
+   "tipo": "lógica-negócio",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "unit",
+   "depende_de": [
+    "TASK-006",
+    "TASK-015"
+   ],
+   "producao": [
+    "app/domain/anomaly_detection.py"
+   ],
+   "teste": [
+    "tests/unit/domain/test_anomaly_detection.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-13",
+    "CT-15",
+    "CT-6"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-28",
+    "SEA-29",
+    "SEA-54",
+    "SEA-58",
+    "SEA-59",
+    "SEA-96"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-018": {
+   "titulo": "Serviço de anomalias (recálculo e listagem)",
+   "tipo": "lógica-negócio",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "integration",
+   "depende_de": [
+    "TASK-010",
+    "TASK-017"
+   ],
+   "producao": [
+    "app/application/services/anomaly_service.py"
+   ],
+   "teste": [
+    "tests/integration/application/test_anomaly_service.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-15",
+    "CT-16",
+    "CT-23",
+    "CT-6",
+    "CT-7",
+    "CT-9"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-27",
+    "SEA-29",
+    "SEA-30",
+    "SEA-31",
+    "SEA-57",
+    "SEA-60"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-019": {
+   "titulo": "Serviço de importação de CSV",
+   "tipo": "lógica-negócio",
+   "risco": "alto",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "integration",
+   "depende_de": [
+    "TASK-003",
+    "TASK-010",
+    "TASK-013",
+    "TASK-014",
+    "TASK-018"
+   ],
+   "producao": [
+    "app/application/services/import_service.py"
+   ],
+   "teste": [
+    "tests/integration/application/test_import_service.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-1",
+    "CT-11",
+    "CT-12",
+    "CT-16",
+    "CT-17",
+    "CT-23",
+    "CT-3",
+    "CT-9"
+   ],
+   "ancora": [
+    "AS-3"
+   ],
+   "requisitos": [
+    "SEA-07",
+    "SEA-08",
+    "SEA-14",
+    "SEA-17",
+    "SEA-41",
+    "SEA-42",
+    "SEA-43",
+    "SEA-44",
+    "SEA-45",
+    "SEA-60",
+    "SEA-97",
+    "SEA-98",
+    "SEA-102",
+    "SEA-103",
+    "SEA-104",
+    "SEA-106",
+    "SEA-107"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-020": {
+   "titulo": "Serviços de Category e CategorizationRule",
+   "tipo": "crud-padrão",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "integration",
+   "depende_de": [
+    "TASK-003",
+    "TASK-010",
+    "TASK-013"
+   ],
+   "producao": [
+    "app/application/services/category_service.py",
+    "app/application/services/categorization_rule_service.py"
+   ],
+   "teste": [
+    "tests/integration/application/test_category_service.py",
+    "tests/integration/application/test_categorization_rule_service.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-10",
+    "CT-18",
+    "CT-23",
+    "CT-3",
+    "CT-7",
+    "CT-9"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-15",
+    "SEA-16",
+    "SEA-18",
+    "SEA-48",
+    "SEA-49",
+    "SEA-50",
+    "SEA-51",
+    "SEA-53",
+    "SEA-64"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-021": {
+   "titulo": "Serviço de consulta de transações",
+   "tipo": "crud-padrão",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "integration",
+   "depende_de": [
+    "TASK-003",
+    "TASK-010",
+    "TASK-013"
+   ],
+   "producao": [
+    "app/application/services/transaction_service.py"
+   ],
+   "teste": [
+    "tests/integration/application/test_transaction_service.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-10",
+    "CT-19",
+    "CT-23",
+    "CT-3",
+    "CT-7",
+    "CT-9"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-11",
+    "SEA-12",
+    "SEA-93"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-022": {
+   "titulo": "Serviço de recategorização",
+   "tipo": "lógica-negócio",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "integration",
+   "depende_de": [
+    "TASK-002",
+    "TASK-010",
+    "TASK-013",
+    "TASK-018"
+   ],
+   "producao": [
+    "app/application/services/recategorization_service.py"
+   ],
+   "teste": [
+    "tests/integration/application/test_recategorization_service.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-1",
+    "CT-11",
+    "CT-16",
+    "CT-20",
+    "CT-23",
+    "CT-7",
+    "CT-9"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-63",
+    "SEA-65",
+    "SEA-66",
+    "SEA-109"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-023": {
+   "titulo": "Serviço de analytics (resumo, categorias, série mensal)",
+   "tipo": "lógica-negócio",
+   "risco": "médio",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "integration",
+   "depende_de": [
+    "TASK-010",
+    "TASK-015",
+    "TASK-016"
+   ],
+   "producao": [
+    "app/application/services/analytics_service.py"
+   ],
+   "teste": [
+    "tests/integration/application/test_analytics_service.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-13",
+    "CT-14",
+    "CT-21",
+    "CT-23",
+    "CT-6",
+    "CT-7",
+    "CT-9"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-20",
+    "SEA-21",
+    "SEA-22",
+    "SEA-23",
+    "SEA-24",
+    "SEA-25",
+    "SEA-54",
+    "SEA-55",
+    "SEA-56",
+    "SEA-57",
+    "SEA-61",
+    "SEA-62",
+    "SEA-95",
+    "SEA-101"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-024": {
+   "titulo": "Endpoint POST /imports",
+   "tipo": "crud-padrão",
+   "risco": "alto",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "integration",
+   "depende_de": [
+    "TASK-011",
+    "TASK-012",
+    "TASK-014",
+    "TASK-019"
+   ],
+   "producao": [
+    "app/api/routers/imports.py",
+    "app/api/schemas/imports.py"
+   ],
+   "teste": [
+    "tests/integration/api/test_imports_api.py"
+   ],
+   "wiring": [
+    "app/main.py"
+   ],
+   "contratos": [
+    "CT-12",
+    "CT-17",
+    "CT-22",
+    "CT-26"
+   ],
+   "ancora": [
+    "AS-6"
+   ],
+   "requisitos": [
+    "SEA-07",
+    "SEA-08",
+    "SEA-35",
+    "SEA-42",
+    "SEA-43",
+    "SEA-45",
+    "SEA-90",
+    "SEA-91",
+    "SEA-92",
+    "SEA-104"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-025": {
+   "titulo": "Endpoints de transações e recategorização",
+   "tipo": "crud-padrão",
+   "risco": "alto",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "integration",
+   "depende_de": [
+    "TASK-011",
+    "TASK-012",
+    "TASK-021",
+    "TASK-022"
+   ],
+   "producao": [
+    "app/api/routers/transactions.py",
+    "app/api/schemas/transactions.py"
+   ],
+   "teste": [
+    "tests/integration/api/test_transactions_api.py"
+   ],
+   "wiring": [
+    "app/main.py"
+   ],
+   "contratos": [
+    "CT-19",
+    "CT-20",
+    "CT-22",
+    "CT-26"
+   ],
+   "ancora": [
+    "AS-6"
+   ],
+   "requisitos": [
+    "SEA-11",
+    "SEA-12",
+    "SEA-13",
+    "SEA-35",
+    "SEA-40",
+    "SEA-63",
+    "SEA-67",
+    "SEA-68",
+    "SEA-93",
+    "SEA-94"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-026": {
+   "titulo": "Endpoints de categorias",
+   "tipo": "crud-padrão",
+   "risco": "alto",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "integration",
+   "depende_de": [
+    "TASK-011",
+    "TASK-012",
+    "TASK-020"
+   ],
+   "producao": [
+    "app/api/routers/categories.py",
+    "app/api/schemas/categories.py"
+   ],
+   "teste": [
+    "tests/integration/api/test_categories_api.py"
+   ],
+   "wiring": [
+    "app/main.py"
+   ],
+   "contratos": [
+    "CT-18",
+    "CT-22",
+    "CT-26"
+   ],
+   "ancora": [
+    "AS-6"
+   ],
+   "requisitos": [
+    "SEA-15",
+    "SEA-16",
+    "SEA-35",
+    "SEA-51",
+    "SEA-53"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-027": {
+   "titulo": "Endpoints CRUD de regras de categorização",
+   "tipo": "crud-padrão",
+   "risco": "alto",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "integration",
+   "depende_de": [
+    "TASK-011",
+    "TASK-012",
+    "TASK-020"
+   ],
+   "producao": [
+    "app/api/routers/categorization_rules.py",
+    "app/api/schemas/categorization_rules.py"
+   ],
+   "teste": [
+    "tests/integration/api/test_categorization_rules_api.py"
+   ],
+   "wiring": [
+    "app/main.py"
+   ],
+   "contratos": [
+    "CT-18",
+    "CT-22",
+    "CT-26"
+   ],
+   "ancora": [
+    "AS-6"
+   ],
+   "requisitos": [
+    "SEA-18",
+    "SEA-35",
+    "SEA-48",
+    "SEA-49",
+    "SEA-50"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-028": {
+   "titulo": "Endpoints de analytics",
+   "tipo": "crud-padrão",
+   "risco": "alto",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "integration",
+   "depende_de": [
+    "TASK-011",
+    "TASK-012",
+    "TASK-023"
+   ],
+   "producao": [
+    "app/api/routers/analytics.py",
+    "app/api/schemas/analytics.py"
+   ],
+   "teste": [
+    "tests/integration/api/test_analytics_api.py"
+   ],
+   "wiring": [
+    "app/main.py"
+   ],
+   "contratos": [
+    "CT-21",
+    "CT-22",
+    "CT-26"
+   ],
+   "ancora": [
+    "AS-6"
+   ],
+   "requisitos": [
+    "SEA-20",
+    "SEA-21",
+    "SEA-22",
+    "SEA-23",
+    "SEA-24",
+    "SEA-35",
+    "SEA-54",
+    "SEA-55",
+    "SEA-56",
+    "SEA-57",
+    "SEA-61",
+    "SEA-95"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-029": {
+   "titulo": "Endpoint GET /anomalies",
+   "tipo": "crud-padrão",
+   "risco": "alto",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "integration",
+   "depende_de": [
+    "TASK-011",
+    "TASK-012",
+    "TASK-018"
+   ],
+   "producao": [
+    "app/api/routers/anomalies.py",
+    "app/api/schemas/anomalies.py"
+   ],
+   "teste": [
+    "tests/integration/api/test_anomalies_api.py"
+   ],
+   "wiring": [
+    "app/main.py"
+   ],
+   "contratos": [
+    "CT-16",
+    "CT-22",
+    "CT-26"
+   ],
+   "ancora": [
+    "AS-6"
+   ],
+   "requisitos": [
+    "SEA-27",
+    "SEA-31",
+    "SEA-35",
+    "SEA-96"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-030": {
+   "titulo": "Dockerfile e Docker Compose",
+   "tipo": "infra",
+   "risco": "médio",
+   "perfil": "infra",
+   "agente": "hm-engineer",
+   "testes": "unit",
+   "depende_de": [
+    "TASK-005",
+    "TASK-012"
+   ],
+   "producao": [
+    "docker-compose.yml"
+   ],
+   "teste": [
+    "tests/unit/infra/test_docker_files.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-26",
+    "CT-5"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-01"
+   ],
+   "gate": "`docker compose build api` (executar em `.`)",
+   "paralelo_seguro": true
+  },
+  "TASK-031": {
+   "titulo": "Pipeline de CI no GitHub Actions e README",
+   "tipo": "infra",
+   "risco": "baixo",
+   "perfil": "infra",
+   "agente": "hm-engineer",
+   "testes": "unit",
+   "depende_de": [
+    "TASK-030"
+   ],
+   "producao": [
+    ".github/workflows/ci.yml",
+    "README.md"
+   ],
+   "teste": [
+    "tests/unit/infra/test_ci_workflow.py"
+   ],
+   "wiring": [],
+   "contratos": [],
+   "ancora": [],
+   "requisitos": [
+    "SEA-01",
+    "SEA-04"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  },
+  "TASK-032": {
+   "titulo": "CSV de exemplo e teste de aceitação ponta a ponta",
+   "tipo": "teste",
+   "risco": "baixo",
+   "perfil": "backend",
+   "agente": "hm-engineer",
+   "testes": "integration",
+   "depende_de": [
+    "TASK-024",
+    "TASK-025",
+    "TASK-026",
+    "TASK-027",
+    "TASK-028",
+    "TASK-029"
+   ],
+   "producao": [
+    "samples/transacoes_exemplo.csv"
+   ],
+   "teste": [
+    "tests/integration/api/test_acceptance_sample_csv.py"
+   ],
+   "wiring": [],
+   "contratos": [
+    "CT-26"
+   ],
+   "ancora": [],
+   "requisitos": [
+    "SEA-02",
+    "SEA-35"
+   ],
+   "gate": null,
+   "paralelo_seguro": true
+  }
+ },
+ "ondas": [
+  {
+   "n": 1,
+   "tasks": [
+    "TASK-001"
+   ],
+   "risco_max": "médio",
+   "gatilhos_previstos": {},
+   "perfil_qa_previsto": null
+  },
+  {
+   "n": 2,
+   "tasks": [
+    "TASK-002",
+    "TASK-003",
+    "TASK-004",
+    "TASK-006"
+   ],
+   "risco_max": "médio",
+   "gatilhos_previstos": {},
+   "perfil_qa_previsto": null
+  },
+  {
+   "n": 3,
+   "tasks": [
+    "TASK-005",
+    "TASK-011",
+    "TASK-013",
+    "TASK-015"
+   ],
+   "risco_max": "médio",
+   "gatilhos_previstos": {
+    "G2": {
+     "CT-6": [
+      "TASK-011",
+      "TASK-013",
+      "TASK-015"
+     ]
+    }
+   },
+   "perfil_qa_previsto": "PADRAO"
+  },
+  {
+   "n": 4,
+   "tasks": [
+    "TASK-007",
+    "TASK-008",
+    "TASK-009",
+    "TASK-014"
+   ],
+   "risco_max": "médio",
+   "gatilhos_previstos": {
+    "G2": {
+     "CT-7": [
+      "TASK-007",
+      "TASK-008",
+      "TASK-009"
+     ],
+     "CT-5": [
+      "TASK-007",
+      "TASK-008",
+      "TASK-009"
+     ],
+     "CT-6": [
+      "TASK-007",
+      "TASK-008",
+      "TASK-009",
+      "TASK-014"
+     ],
+     "CT-23": [
+      "TASK-007",
+      "TASK-008",
+      "TASK-009"
+     ],
+     "CT-4": [
+      "TASK-007",
+      "TASK-008",
+      "TASK-009"
+     ]
+    }
+   },
+   "perfil_qa_previsto": "PADRAO"
+  },
+  {
+   "n": 5,
+   "tasks": [
+    "TASK-010",
+    "TASK-016",
+    "TASK-017"
+   ],
+   "risco_max": "médio",
+   "gatilhos_previstos": {
+    "G2": {
+     "CT-6": [
+      "TASK-016",
+      "TASK-017"
+     ],
+     "CT-13": [
+      "TASK-016",
+      "TASK-017"
+     ]
+    }
+   },
+   "perfil_qa_previsto": "PADRAO"
+  },
+  {
+   "n": 6,
+   "tasks": [
+    "TASK-012",
+    "TASK-018",
+    "TASK-020",
+    "TASK-021"
+   ],
+   "risco_max": "médio",
+   "gatilhos_previstos": {
+    "G2": {
+     "CT-23": [
+      "TASK-012",
+      "TASK-018",
+      "TASK-020",
+      "TASK-021"
+     ],
+     "CT-3": [
+      "TASK-012",
+      "TASK-020",
+      "TASK-021"
+     ],
+     "CT-9": [
+      "TASK-012",
+      "TASK-018",
+      "TASK-020",
+      "TASK-021"
+     ],
+     "CT-7": [
+      "TASK-018",
+      "TASK-020",
+      "TASK-021"
+     ],
+     "CT-10": [
+      "TASK-020",
+      "TASK-021"
+     ]
+    }
+   },
+   "perfil_qa_previsto": "PADRAO"
+  },
+  {
+   "n": 7,
+   "tasks": [
+    "TASK-019"
+   ],
+   "risco_max": "alto",
+   "gatilhos_previstos": {
+    "G1": [
+     "TASK-019"
+    ]
+   },
+   "perfil_qa_previsto": "RIGOROSO"
+  },
+  {
+   "n": 8,
+   "tasks": [
+    "TASK-024"
+   ],
+   "risco_max": "alto",
+   "gatilhos_previstos": {
+    "G1": [
+     "TASK-024"
+    ]
+   },
+   "perfil_qa_previsto": "RIGOROSO"
+  },
+  {
+   "n": 9,
+   "tasks": [
+    "TASK-026"
+   ],
+   "risco_max": "alto",
+   "gatilhos_previstos": {
+    "G1": [
+     "TASK-026"
+    ]
+   },
+   "perfil_qa_previsto": "RIGOROSO"
+  },
+  {
+   "n": 10,
+   "tasks": [
+    "TASK-027"
+   ],
+   "risco_max": "alto",
+   "gatilhos_previstos": {
+    "G1": [
+     "TASK-027"
+    ],
+    "G3": [
+     "P1: Categorização automática por regras configuráveis"
+    ]
+   },
+   "perfil_qa_previsto": "RIGOROSO"
+  },
+  {
+   "n": 11,
+   "tasks": [
+    "TASK-029"
+   ],
+   "risco_max": "alto",
+   "gatilhos_previstos": {
+    "G1": [
+     "TASK-029"
+    ],
+    "G3": [
+     "P1: Lista de possíveis anomalias"
+    ]
+   },
+   "perfil_qa_previsto": "RIGOROSO"
+  },
+  {
+   "n": 12,
+   "tasks": [
+    "TASK-022",
+    "TASK-023",
+    "TASK-030"
+   ],
+   "risco_max": "médio",
+   "gatilhos_previstos": {
+    "G2": {
+     "CT-7": [
+      "TASK-022",
+      "TASK-023"
+     ],
+     "CT-23": [
+      "TASK-022",
+      "TASK-023"
+     ],
+     "CT-9": [
+      "TASK-022",
+      "TASK-023"
+     ]
+    }
+   },
+   "perfil_qa_previsto": "PADRAO"
+  },
+  {
+   "n": 13,
+   "tasks": [
+    "TASK-025"
+   ],
+   "risco_max": "alto",
+   "gatilhos_previstos": {
+    "G1": [
+     "TASK-025"
+    ],
+    "G3": [
+     "P1: Importar CSV e consultar transações"
+    ]
+   },
+   "perfil_qa_previsto": "RIGOROSO"
+  },
+  {
+   "n": 14,
+   "tasks": [
+    "TASK-028"
+   ],
+   "risco_max": "alto",
+   "gatilhos_previstos": {
+    "G1": [
+     "TASK-028"
+    ],
+    "G3": [
+     "P1: Estatísticas e resumos de gastos"
+    ]
+   },
+   "perfil_qa_previsto": "RIGOROSO"
+  },
+  {
+   "n": 15,
+   "tasks": [
+    "TASK-031",
+    "TASK-032"
+   ],
+   "risco_max": "baixo",
+   "gatilhos_previstos": {
+    "G3": [
+     "P1: Ambiente reproduzível e pipeline de CI"
+    ]
+   },
+   "perfil_qa_previsto": "PADRAO"
+  }
+ ]
+}
