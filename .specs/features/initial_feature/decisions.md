@@ -169,3 +169,11 @@ Etapa: gate de clarificação do spec (spec-writer, 1ª passada) · Data: 2026-0
 - **Premissa**: (1) SEA-62: LAC-18 ("todo o histórico") vale também para GET /analytics/monthly; (2) SEA-65: a recategorização recalcula as anomalias; (3) SEA-56: faixas do histograma [0,50), [50,100), [100,500), [500,∞); (4) SEA-38: código de moeda gravado em maiúsculas; (5) SEA-43: o 409 por hash vale só contra Imports concluídos, e o reenvio depois de "Falhou" é aceito; (6) SEA-103: linha repetida no mesmo arquivo conta como duplicada.
 - **Reversibilidade**: alta (cada item muda um critério isolado)
 - **Onde impacta**: spec.md SEA-38, SEA-43, SEA-56, SEA-62, SEA-65, SEA-103
+
+### ENV-01 — Ambiente de verificação do run.py (etapa: /implement, aceite da TASK-001)
+- **Data**: 2026-09-26
+- **Contexto**: o aceite da TASK-001 falhou com `ModuleNotFoundError: No module named 'app'`. O run.py chamava o pytest global (uv tool, Python 3.14, sem as dependências do projeto), e o `pytest.ini` da raiz tem precedência sobre `[tool.pytest.ini_options]` do pyproject.
+- **Opções apresentadas**: A) `.venv` Python 3.12 compartilhado na raiz, só com as dependências, run.py rodando com ele no PATH, e `pytest.ini` com `pythonpath = .`, `testpaths = tests` e `--import-mode=importlib` B) remover o `pytest.ini` C) pausar
+- **Recomendação do orquestrador**: A
+- **Escolha**: A
+- **Observações**: o `pytest.ini` passa a ser a fonte da config do pytest, e o `[tool.pytest.ini_options]` do pyproject (TASK-001) fica ignorado. Requer atualização de plan (seção de comandos/ambiente): a verificação roda com `.venv/bin` no PATH.
