@@ -361,6 +361,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-012 — Factory da aplicação FastAPI
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-02`
 - **Tipo**: infra
@@ -545,6 +546,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-018 — Serviço de anomalias (recálculo e listagem)
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-27`, `SEA-29`, `SEA-30`, `SEA-31`, `SEA-57`, `SEA-60`
 - **Tipo**: lógica-negócio
@@ -612,6 +614,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-020 — Serviços de Category e CategorizationRule
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-15`, `SEA-16`, `SEA-18`, `SEA-48`, `SEA-49`, `SEA-50`, `SEA-51`, `SEA-53`, `SEA-64`
 - **Tipo**: crud-padrão
@@ -644,6 +647,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-021 — Serviço de consulta de transações
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-11`, `SEA-12`, `SEA-93`
 - **Tipo**: crud-padrão
