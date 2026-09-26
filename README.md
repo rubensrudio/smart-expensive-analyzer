@@ -123,6 +123,12 @@ individualmente, enquanto as demais continuam sendo importadas.
 
 ## Desenvolvimento local
 
+Instale as ferramentas de qualidade e testes com `uv`:
+
+```bash
+uv tool install pytest && uv tool install ruff && uv tool install mypy
+```
+
 Após a criação do `pyproject.toml`, o ambiente de desenvolvimento será
 preparado com:
 
