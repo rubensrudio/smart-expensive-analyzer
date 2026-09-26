@@ -196,3 +196,11 @@ Etapa: gate de clarificação do spec (spec-writer, 1ª passada) · Data: 2026-0
 - **Recomendação do orquestrador**: A
 - **Escolha**: A
 - **Observações**: correção sugerida: `Field(gt=0, allow_inf_nan=False)` e um teste. Requer atualização de plan (CT-1) numa próxima iteração.
+
+### SCOPE-01 — Ordem de imports no conftest quebra o lint quando app/main.py passa a existir (etapa: /implement, aceite da TASK-012)
+- **Data**: 2026-09-26
+- **Contexto**: `ruff check` aponta I001 em `tests/integration/conftest.py:113` (import tardio de `app.main` na fixture `client`, TASK-005). Com `app/main.py` presente, o ruff trata `app.main` como first-party e pede que ele venha depois de `fastapi.testclient`. O arquivo está fora do escopo da TASK-012 (Wiring: —).
+- **Opções apresentadas**: A) o humano amplia o Wiring da TASK-012 em tasks.md para incluir `tests/integration/conftest.py` (só ordem de imports) e roda o check_plan B) bloquear a TASK-012 C) reprovar e tentar dentro do escopo
+- **Recomendação do orquestrador**: A
+- **Escolha**: A
+- **Observações**: requer atualização de tasks.md (feita pelo humano, com check_plan). Depois disso, o implementador da TASK-012 é retomado para aplicar a correção de uma linha.
