@@ -188,3 +188,11 @@ Etapa: gate de clarificação do spec (spec-writer, 1ª passada) · Data: 2026-0
 ### ENV-01 (adendo) — Testcontainers com colima
 - **Data**: 2026-09-26
 - **Observação**: os testes de integração exigem `TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock` nesta máquina (Docker via colima). O run.py roda com essa variável, além de `.venv/bin` no PATH e `PYTHONPATH=.`.
+
+### FUP-01 — ANOMALY_IQR_K não finito aceito pela config (etapa: /implement, QA da onda 5)
+- **Data**: 2026-09-26
+- **Contexto**: `Field(default=1.5, gt=0)` em app/core/config.py (CT-1, TASK-002) aceita "inf" e "1e309". `detect_iqr_anomalies` (TASK-017) levanta ValueError nesses casos, e o recompute_all (TASK-018) derruba o import. Só pode ser causado por configuração do operador.
+- **Opções apresentadas**: A) registrar como follow-up, sem mudar o escopo B) corrigir nesta feature com uma task nova
+- **Recomendação do orquestrador**: A
+- **Escolha**: A
+- **Observações**: correção sugerida: `Field(gt=0, allow_inf_nan=False)` e um teste. Requer atualização de plan (CT-1) numa próxima iteração.
