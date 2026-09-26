@@ -9,6 +9,7 @@ em `médio` por decisão humana (LAC-21 = B). Nenhuma `crítico`: AS-1, AS-2, AS
 estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 
 ### TASK-001 — Fundação do projeto e códigos de moeda ISO 4217
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-04`, `SEA-38`, `SEA-108`
 - **Tipo**: infra
