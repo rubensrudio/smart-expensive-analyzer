@@ -7,20 +7,20 @@
 | 1 | TASK-001 | médio | — | — |
 | 2 | TASK-002, TASK-003, TASK-004, TASK-006 | médio | — | — |
 | 3 | TASK-005, TASK-011, TASK-013, TASK-015 | médio | G2 CT-6 | PADRAO |
-| 4 | TASK-007, TASK-008, TASK-009, TASK-014 | médio | G2 CT-7,CT-5,CT-6,CT-23,CT-4 | PADRAO |
-| 5 | TASK-010, TASK-016, TASK-017 | médio | G2 CT-6,CT-13 | PADRAO |
-| 6 | TASK-012, TASK-018, TASK-020, TASK-021 | médio | G2 CT-23,CT-3,CT-9,CT-7,CT-10 | PADRAO |
+| 4 | TASK-007, TASK-008, TASK-009, TASK-014 | médio | G2 CT-23,CT-5,CT-4,CT-7,CT-6 | PADRAO |
+| 5 | TASK-010, TASK-016, TASK-017 | médio | G2 CT-13,CT-6 | PADRAO |
+| 6 | TASK-012, TASK-018, TASK-020, TASK-021 | médio | G2 CT-23,CT-9,CT-3,CT-7,CT-10 | PADRAO |
 | 7 | TASK-019 | alto | G1 TASK-019 | RIGOROSO |
 | 8 | TASK-024 | alto | G1 TASK-024 | RIGOROSO |
 | 9 | TASK-026 | alto | G1 TASK-026 | RIGOROSO |
 | 10 | TASK-027 | alto | G1 TASK-027; G3 (1 história(s) P1) | RIGOROSO |
 | 11 | TASK-029 | alto | G1 TASK-029; G3 (1 história(s) P1) | RIGOROSO |
-| 12 | TASK-022, TASK-023, TASK-030 | médio | G2 CT-7,CT-23,CT-9 | PADRAO |
+| 12 | TASK-022, TASK-023, TASK-030 | médio | G2 CT-23,CT-9,CT-7 | PADRAO |
 | 13 | TASK-025 | alto | G1 TASK-025; G3 (1 história(s) P1) | RIGOROSO |
 | 14 | TASK-028 | alto | G1 TASK-028; G3 (1 história(s) P1) | RIGOROSO |
 | 15 | TASK-031, TASK-032 | baixo | G3 (1 história(s) P1) | PADRAO |
 
-Caminho crítico: TASK-001 → TASK-002 → TASK-005 → TASK-008 → TASK-010 → TASK-018 → TASK-022 → TASK-025 → TASK-032 (9 tasks)
+Caminho crítico: TASK-001 → TASK-002 → TASK-005 → TASK-008 → TASK-010 → TASK-018 → TASK-019 → TASK-024 → TASK-032 (9 tasks)
 G4 (gate cego) e G5 (retry) só são conhecidos na execução.
 
 ## Cobertura de requisitos

@@ -371,7 +371,8 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
   - `app/main.py`
 - **Arquivos de teste**:
   - `tests/integration/api/test_app.py`
-- **Wiring permitido**: —
+- **Wiring permitido**:
+  - `tests/integration/conftest.py` (só a ordem de imports)
 - **Reusa**:
   - `app/core/config.py` → `load_settings_or_exit`; `app/core/logging.py` → `configure_logging`
   - `app/api/errors.py` → `register_exception_handlers`

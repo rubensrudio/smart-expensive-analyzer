@@ -188,3 +188,19 @@ Etapa: gate de clarificação do spec (spec-writer, 1ª passada) · Data: 2026-0
 ### ENV-01 (adendo) — Testcontainers com colima
 - **Data**: 2026-09-26
 - **Observação**: os testes de integração exigem `TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock` nesta máquina (Docker via colima). O run.py roda com essa variável, além de `.venv/bin` no PATH e `PYTHONPATH=.`.
+
+### FUP-01 — ANOMALY_IQR_K não finito aceito pela config (etapa: /implement, QA da onda 5)
+- **Data**: 2026-09-26
+- **Contexto**: `Field(default=1.5, gt=0)` em app/core/config.py (CT-1, TASK-002) aceita "inf" e "1e309". `detect_iqr_anomalies` (TASK-017) levanta ValueError nesses casos, e o recompute_all (TASK-018) derruba o import. Só pode ser causado por configuração do operador.
+- **Opções apresentadas**: A) registrar como follow-up, sem mudar o escopo B) corrigir nesta feature com uma task nova
+- **Recomendação do orquestrador**: A
+- **Escolha**: A
+- **Observações**: correção sugerida: `Field(gt=0, allow_inf_nan=False)` e um teste. Requer atualização de plan (CT-1) numa próxima iteração.
+
+### SCOPE-01 — Ordem de imports no conftest quebra o lint quando app/main.py passa a existir (etapa: /implement, aceite da TASK-012)
+- **Data**: 2026-09-26
+- **Contexto**: `ruff check` aponta I001 em `tests/integration/conftest.py:113` (import tardio de `app.main` na fixture `client`, TASK-005). Com `app/main.py` presente, o ruff trata `app.main` como first-party e pede que ele venha depois de `fastapi.testclient`. O arquivo está fora do escopo da TASK-012 (Wiring: —).
+- **Opções apresentadas**: A) o humano amplia o Wiring da TASK-012 em tasks.md para incluir `tests/integration/conftest.py` (só ordem de imports) e roda o check_plan B) bloquear a TASK-012 C) reprovar e tentar dentro do escopo
+- **Recomendação do orquestrador**: A
+- **Escolha**: A
+- **Observações**: requer atualização de tasks.md (feita pelo humano, com check_plan). Depois disso, o implementador da TASK-012 é retomado para aplicar a correção de uma linha.
