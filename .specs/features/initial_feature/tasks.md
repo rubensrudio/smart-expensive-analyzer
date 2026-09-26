@@ -208,6 +208,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-007 — Repositórios SQLAlchemy de Category e CategorizationRule
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-47`, `SEA-48`, `SEA-51`, `SEA-53`
 - **Tipo**: crud-padrão
@@ -237,6 +238,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-008 — Repositório SQLAlchemy de Transaction
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-11`, `SEA-13`, `SEA-21`, `SEA-25`, `SEA-39`, `SEA-44`, `SEA-67`, `SEA-68`, `SEA-101`, `SEA-106`
 - **Tipo**: crud-padrão
@@ -266,6 +268,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-009 — Repositórios SQLAlchemy de Import e Anomaly
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-27`, `SEA-30`, `SEA-31`, `SEA-41`, `SEA-43`, `SEA-107`
 - **Tipo**: crud-padrão
@@ -418,6 +421,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-014 — Leitura do CSV e validação por linha
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-09`, `SEA-10`, `SEA-36`, `SEA-37`, `SEA-38`, `SEA-39`, `SEA-41`, `SEA-90`, `SEA-91`, `SEA-92`, `SEA-110`
 - **Tipo**: lógica-negócio
