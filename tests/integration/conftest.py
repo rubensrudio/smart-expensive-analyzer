@@ -110,8 +110,9 @@ def uow(uow_factory: Callable[[], "UnitOfWork"]) -> Iterator["UnitOfWork"]:
 @pytest.fixture
 def client(settings: Settings) -> Iterator["TestClient"]:
     # Import tardio: `create_app` só existe a partir da TASK-012.
-    from app.main import create_app
     from fastapi.testclient import TestClient
+
+    from app.main import create_app
 
     with TestClient(create_app(settings)) as c:
         yield c
