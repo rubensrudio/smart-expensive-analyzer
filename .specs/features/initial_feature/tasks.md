@@ -143,6 +143,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-005 — Migration inicial Alembic e fixtures de integração
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-01`, `SEA-52`
 - **Tipo**: migration
@@ -325,6 +326,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-011 — Parâmetros comuns da API (período, paginação) e schemas compartilhados
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-11`, `SEA-13`, `SEA-40`, `SEA-57`, `SEA-67`, `SEA-99`, `SEA-100`, `SEA-105`
 - **Tipo**: lógica-negócio
@@ -386,6 +388,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-013 — Normalização de texto e casamento de regras de categorização
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-09`, `SEA-17`, `SEA-19`, `SEA-46`, `SEA-47`, `SEA-52`
 - **Tipo**: lógica-negócio
@@ -450,6 +453,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-015 — Estatísticas descritivas, histograma e percentuais
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-20`, `SEA-22`, `SEA-26`, `SEA-54`, `SEA-55`, `SEA-56`
 - **Tipo**: lógica-negócio
