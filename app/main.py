@@ -16,6 +16,7 @@ from app.api.routers.anomalies import router as anomalies_router
 from app.api.routers.categories import router as categories_router
 from app.api.routers.categorization_rules import router as categorization_rules_router
 from app.api.routers.imports import router as imports_router
+from app.api.routers.transactions import router as transactions_router
 from app.core.config import Settings, load_settings_or_exit
 from app.core.logging import configure_logging
 from app.infrastructure.db.session import create_engine_from_url, create_session_factory
@@ -53,5 +54,6 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(categories_router)
     app.include_router(categorization_rules_router)
     app.include_router(anomalies_router)
+    app.include_router(transactions_router)
 
     return app
