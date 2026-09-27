@@ -260,3 +260,11 @@ Etapa: gate de clarificação do spec (spec-writer, 1ª passada) · Data: 2026-0
 - **Contexto**: com o container Postgres pausado (não parado), as requisições ficaram penduradas até o timeout do cliente em vez de devolver 503. Provavelmente falta connect/statement timeout em `create_engine_from_url` (TASK-004). Causa não confirmada.
 - **Decisão**: registrado como follow-up pelo orquestrador, sem mudar escopo.
 - **Observações**: também sai do QA da onda 13 a sugestão de levar o teto de offset para `pagination_params` (CT-22), unificando o código de erro em INVALID_PAGINATION junto com o FUP-04.
+
+### FUP-07 — DATABASE_URL malformada não é nomeada no log (SEA-03 parcial) (etapa: /implement, QA FEATURE)
+- **Data**: 2026-09-27
+- **Contexto**: com `DATABASE_URL=nao-e-url`, o contêiner sai com exit 1 (fail-closed, sem vazar o valor). Só que o log mostra o traceback do alembic (`Could not parse SQLAlchemy URL`) e não traz `Configuração inválida: DATABASE_URL ...`. A causa é que o CT-1 (`database_url: str`) não valida o formato. Os outros 5 casos de configuração inválida estão corretos.
+- **Opções apresentadas**: A) registrar como follow-up e aprovar a feature B) corrigir antes do PR com uma task nova C) fechar como REPROVADO
+- **Recomendação do orquestrador**: A
+- **Escolha**: A
+- **Observações**: correção sugerida: `field_validator` com `sqlalchemy.engine.make_url` em `database_url`, sem logar o valor, e um teste em tests/unit/core/test_config.py. Requer atualização de plan (CT-1). Outras notas do QA FEATURE, não bloqueantes: `import_started` e `import_failed` saem com ids diferentes (DA-16); o README não avisa que o CSV de exemplo só produz a anomalia plantada depois de criar as regras; o pipeline de CI nunca rodou no GitHub (critério 13.5 não verificado); 16 IDs de requisito não aparecem citados nos testes (critério 13.6 incompleto na forma).
