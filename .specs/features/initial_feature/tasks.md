@@ -877,6 +877,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-028 — Endpoints de analytics
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-20`, `SEA-21`, `SEA-22`, `SEA-23`, `SEA-24`, `SEA-35`, `SEA-54`, `SEA-55`, `SEA-56`, `SEA-57`, `SEA-61`, `SEA-95`
 - **Tipo**: crud-padrão
