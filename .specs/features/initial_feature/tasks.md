@@ -805,6 +805,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-026 — Endpoints de categorias
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-15`, `SEA-16`, `SEA-35`, `SEA-51`, `SEA-53`
 - **Tipo**: crud-padrão
