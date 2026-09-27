@@ -13,6 +13,7 @@ from fastapi import FastAPI
 
 from app.api.errors import register_exception_handlers
 from app.api.routers.categories import router as categories_router
+from app.api.routers.categorization_rules import router as categorization_rules_router
 from app.api.routers.imports import router as imports_router
 from app.core.config import Settings, load_settings_or_exit
 from app.core.logging import configure_logging
@@ -49,5 +50,6 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     app.include_router(imports_router)
     app.include_router(categories_router)
+    app.include_router(categorization_rules_router)
 
     return app
