@@ -40,11 +40,11 @@ _ITEM_ERROR_RESPONSES: dict[int | str, dict[str, Any]] = {
     status.HTTP_503_SERVICE_UNAVAILABLE: _SERVICE_UNAVAILABLE,
 }
 _UPDATE_ERROR_RESPONSES: dict[int | str, dict[str, Any]] = {
-    **_ITEM_ERROR_RESPONSES,
-    status.HTTP_422_UNPROCESSABLE_CONTENT: {
-        "model": ErrorResponse,
-        "description": "RULE_CATEGORY_NOT_FOUND | VALIDATION_ERROR",
-    },
+    status.HTTP_404_NOT_FOUND: _RULE_NOT_FOUND,
+    status.HTTP_422_UNPROCESSABLE_CONTENT: _CREATE_ERROR_RESPONSES[
+        status.HTTP_422_UNPROCESSABLE_CONTENT
+    ],
+    status.HTTP_503_SERVICE_UNAVAILABLE: _SERVICE_UNAVAILABLE,
 }
 
 # Faixa do BIGINT da coluna `id`: fora dela o banco quebraria (500); vira 422.

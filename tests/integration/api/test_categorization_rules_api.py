@@ -253,6 +253,65 @@ def test_post_keyword_with_lone_surrogate_returns_422(client: TestClient, engine
     assert _count_rules(engine) == 0
 
 
+# Achado TASK-027-1: U+001C..U+001F não são White_Space para o `strip_whitespace` do
+# pydantic-core, mas `str.split()` os descarta. Só deles, a keyword normalizada fica vazia
+# e o serviço levantaria `ValueError` (500).
+SEPARATOR_ONLY_KEYWORDS = ["\x1c", "\x1f", "\x1d \x1e", "\x1c\x1d\x1e\x1f", " \x1f\t"]
+SEPARATOR_ONLY_IDS = ["fs", "us", "gs-space-rs", "all-four", "mixed-spaces"]
+
+
+@pytest.mark.parametrize("keyword", SEPARATOR_ONLY_KEYWORDS, ids=SEPARATOR_ONLY_IDS)
+def test_post_separator_only_keyword_returns_422(
+    client: TestClient, engine: Engine, keyword: str
+) -> None:
+    category_id = _category(client)
+
+    response = client.post(
+        BASE, json={"keyword": keyword, "category_id": category_id, "priority": 1}
+    )
+
+    _assert_validation_error(response, "body.keyword")
+    assert _count_rules(engine) == 0
+
+
+@pytest.mark.parametrize("keyword", SEPARATOR_ONLY_KEYWORDS, ids=SEPARATOR_ONLY_IDS)
+def test_put_separator_only_keyword_returns_422_and_keeps_rule(
+    client: TestClient, engine: Engine, keyword: str
+) -> None:
+    category_id = _category(client)
+    rule_id = _rule(client, category_id, "uber", priority=10)
+
+    response = client.put(
+        f"{BASE}/{rule_id}", json={"keyword": keyword, "category_id": category_id, "priority": 2}
+    )
+
+    _assert_validation_error(response, "body.keyword")
+    assert _stored_rule(engine, rule_id) == ("uber", category_id, 10)
+
+
+def test_keyword_with_inner_separator_is_normalized(client: TestClient) -> None:
+    category_id = _category(client)
+
+    response = client.post(
+        BASE, json={"keyword": "\x1ca\x1cb\x1f", "category_id": category_id, "priority": 1}
+    )
+
+    assert response.status_code == 201
+    assert response.json()["keyword"] == "a b"
+
+
+def test_keyword_length_is_measured_after_normalization(client: TestClient) -> None:
+    category_id = _category(client)
+    padded = "a" + " " * 300 + "b"  # 302 brutos, 3 normalizados
+
+    accepted = client.post(
+        BASE, json={"keyword": padded, "category_id": category_id, "priority": 1}
+    )
+
+    assert accepted.status_code == 201
+    assert accepted.json()["keyword"] == "a b"
+
+
 def test_keyword_inner_tab_and_newline_are_normalized(client: TestClient) -> None:
     category_id = _category(client)
 
