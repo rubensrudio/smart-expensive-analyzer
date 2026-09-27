@@ -12,6 +12,7 @@ from typing import Final
 from fastapi import FastAPI
 
 from app.api.errors import register_exception_handlers
+from app.api.routers.imports import router as imports_router
 from app.core.config import Settings, load_settings_or_exit
 from app.core.logging import configure_logging
 from app.infrastructure.db.session import create_engine_from_url, create_session_factory
@@ -44,5 +45,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.get("/health", tags=["health"])
     def health() -> dict[str, str]:
         return {"status": "ok"}
+
+    app.include_router(imports_router)
 
     return app
