@@ -246,3 +246,17 @@ Etapa: gate de clarificação do spec (spec-writer, 1ª passada) · Data: 2026-0
 - **Contexto**: o plugin `docker compose` não existe nesta máquina, mas existe o `docker-compose` standalone v5.5.1.
 - **Escolha humana**: shim usado só pelo run.py.
 - **Aplicado**: um script `docker` no scratchpad da sessão repassa `docker compose ...` para `docker-compose ...` e o resto para o docker real. Ele só entra no PATH das chamadas do run.py. O sistema não foi alterado. O build do baseline continua quebrado em develop, porque o Dockerfile não existe lá, então o gate de build segue cego até a feature ser mergeada.
+
+### FUP-05 — /analytics/monthly sem limite de período (ALTA, disponibilidade) (etapa: /implement, QA RIGOROSO da onda 14)
+- **Data**: 2026-09-26
+- **Contexto**: com start_date=0001-01-01 e end_date=9999-12-31 são gerados cerca de 120 mil meses por moeda. Com 25 moedas, uma requisição leva 10 s, devolve 186 MB e sobe o RSS em 2,7 GB. Com as ~180 moedas ISO (cadastráveis via POST /imports), o processo sofre OOM. O endpoint é aberto (LAC-01) e alcançável por CSRF de rede local (FUP-03). Nenhum critério do spec é violado (SEA-32: um item por mês do período).
+- **Opções apresentadas**: A) registrar como follow-up de gravidade ALTA, pendente antes do release B) corrigir nesta feature
+- **Recomendação do orquestrador**: A
+- **Escolha**: A
+- **Observações**: correção sugerida: limite de meses (ex.: 1200) com 422 e código novo no 8.3, ou cortar a série à faixa dos dados. Requer atualização de spec (SEA-32/P-11) e plan (8.1/8.3). Nota menor do mesmo QA: `by_merchant` agrupa pelo texto gravado (distingue caixa), enquanto o filtro de merchant não distingue (P-09/P-01). Fica em aberto.
+
+### FUP-06 — Engine sem timeout de conexão (etapa: /implement, QA RIGOROSO da onda 13)
+- **Data**: 2026-09-26
+- **Contexto**: com o container Postgres pausado (não parado), as requisições ficaram penduradas até o timeout do cliente em vez de devolver 503. Provavelmente falta connect/statement timeout em `create_engine_from_url` (TASK-004). Causa não confirmada.
+- **Decisão**: registrado como follow-up pelo orquestrador, sem mudar escopo.
+- **Observações**: também sai do QA da onda 13 a sugestão de levar o teto de offset para `pagination_params` (CT-22), unificando o código de erro em INVALID_PAGINATION junto com o FUP-04.
