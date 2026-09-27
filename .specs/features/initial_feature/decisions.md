@@ -204,3 +204,11 @@ Etapa: gate de clarificação do spec (spec-writer, 1ª passada) · Data: 2026-0
 - **Recomendação do orquestrador**: A
 - **Escolha**: A
 - **Observações**: requer atualização de tasks.md (feita pelo humano, com check_plan). Depois disso, o implementador da TASK-012 é retomado para aplicar a correção de uma linha.
+
+### FUP-02 — Anomalias desatualizadas quando duas importações rodam em paralelo (etapa: /implement, QA RIGOROSO da onda 7)
+- **Data**: 2026-09-26
+- **Contexto**: `AnomalyService.recompute_all` (TASK-018) lê as despesas antes do `pg_advisory_xact_lock`, que só é obtido em `replace_all` (TASK-009, DA-7). Com duas importações paralelas em READ COMMITTED, quem grava por último substitui o conjunto a partir de uma leitura que não inclui as linhas do outro. O QA reproduziu em 5 de 5 execuções, o que contraria o SEA-60 ("todo o histórico"). O próximo recálculo (import ou recategorização) corrige o conjunto.
+- **Opções apresentadas**: A) registrar como follow-up B) corrigir nesta feature ampliando o escopo
+- **Recomendação do orquestrador**: A
+- **Escolha**: A
+- **Observações**: correção sugerida: obter o advisory lock (815001) antes de `list_expenses` no recompute_all. Requer atualização de plan (DA-7) numa próxima iteração.
