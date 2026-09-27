@@ -1,0 +1,26 @@
+# Ambiente local (TASK-030; SEA-01, DA-12). Uso: cp .env.example .env && docker compose up -d --build
+services:
+  db:
+    image: postgres:16-alpine
+    env_file: .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+    # Sem `ports`: o PostgreSQL só é acessível pela rede interna do Compose.
+
+  api:
+    build: .
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+    # DA-12: API sem autenticação (LAC-01) publicada só em loopback.
+    ports: ["127.0.0.1:8000:8000"]
+
+volumes:
+  pgdata:
