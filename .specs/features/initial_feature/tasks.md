@@ -9,6 +9,7 @@ em `médio` por decisão humana (LAC-21 = B). Nenhuma `crítico`: AS-1, AS-2, AS
 estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 
 ### TASK-001 — Fundação do projeto e códigos de moeda ISO 4217
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-04`, `SEA-38`, `SEA-108`
 - **Tipo**: infra
@@ -49,6 +50,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-002 — Configuração por variáveis de ambiente e logging
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-03`, `SEA-108`, `SEA-58`, `SEA-59`
 - **Tipo**: config
@@ -80,6 +82,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-003 — Erros de domínio e tratamento centralizado de exceções
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-05`, `SEA-06`, `SEA-97`, `SEA-100`
 - **Tipo**: infra
@@ -110,6 +113,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-004 — Modelos ORM e fábrica de sessão
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-09`, `SEA-39`
 - **Tipo**: infra
@@ -139,6 +143,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-005 — Migration inicial Alembic e fixtures de integração
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-01`, `SEA-52`
 - **Tipo**: migration
@@ -173,6 +178,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-006 — Entidades de domínio e portas (repositórios e Unit of Work)
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-39`
 - **Tipo**: lógica-negócio
@@ -202,6 +208,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-007 — Repositórios SQLAlchemy de Category e CategorizationRule
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-47`, `SEA-48`, `SEA-51`, `SEA-53`
 - **Tipo**: crud-padrão
@@ -231,6 +238,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-008 — Repositório SQLAlchemy de Transaction
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-11`, `SEA-13`, `SEA-21`, `SEA-25`, `SEA-39`, `SEA-44`, `SEA-67`, `SEA-68`, `SEA-101`, `SEA-106`
 - **Tipo**: crud-padrão
@@ -260,6 +268,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-009 — Repositórios SQLAlchemy de Import e Anomaly
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-27`, `SEA-30`, `SEA-31`, `SEA-41`, `SEA-43`, `SEA-107`
 - **Tipo**: crud-padrão
@@ -290,6 +299,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-010 — Unit of Work SQLAlchemy e providers de injeção de dependência
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-97`
 - **Tipo**: infra
@@ -320,6 +330,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-011 — Parâmetros comuns da API (período, paginação) e schemas compartilhados
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-11`, `SEA-13`, `SEA-40`, `SEA-57`, `SEA-67`, `SEA-99`, `SEA-100`, `SEA-105`
 - **Tipo**: lógica-negócio
@@ -350,6 +361,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-012 — Factory da aplicação FastAPI
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-02`
 - **Tipo**: infra
@@ -382,6 +394,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-013 — Normalização de texto e casamento de regras de categorização
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-09`, `SEA-17`, `SEA-19`, `SEA-46`, `SEA-47`, `SEA-52`
 - **Tipo**: lógica-negócio
@@ -411,6 +424,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-014 — Leitura do CSV e validação por linha
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-09`, `SEA-10`, `SEA-36`, `SEA-37`, `SEA-38`, `SEA-39`, `SEA-41`, `SEA-90`, `SEA-91`, `SEA-92`, `SEA-110`
 - **Tipo**: lógica-negócio
@@ -446,6 +460,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-015 — Estatísticas descritivas, histograma e percentuais
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-20`, `SEA-22`, `SEA-26`, `SEA-54`, `SEA-55`, `SEA-56`
 - **Tipo**: lógica-negócio
@@ -473,6 +488,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-016 — Série mensal de despesas
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-32`, `SEA-33`, `SEA-34`, `SEA-54`, `SEA-62`
 - **Tipo**: lógica-negócio
@@ -500,6 +516,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-017 — Detecção de anomalias por IQR
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-28`, `SEA-29`, `SEA-54`, `SEA-58`, `SEA-59`, `SEA-96`
 - **Tipo**: lógica-negócio
@@ -529,6 +546,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-018 — Serviço de anomalias (recálculo e listagem)
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-27`, `SEA-29`, `SEA-30`, `SEA-31`, `SEA-57`, `SEA-60`
 - **Tipo**: lógica-negócio
@@ -557,6 +575,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-019 — Serviço de importação de CSV
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-07`, `SEA-08`, `SEA-14`, `SEA-17`, `SEA-41`, `SEA-42`, `SEA-43`, `SEA-44`, `SEA-45`, `SEA-60`, `SEA-97`, `SEA-98`, `SEA-102`, `SEA-103`, `SEA-104`, `SEA-106`, `SEA-107`
 - **Tipo**: lógica-negócio
@@ -596,6 +615,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-020 — Serviços de Category e CategorizationRule
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-15`, `SEA-16`, `SEA-18`, `SEA-48`, `SEA-49`, `SEA-50`, `SEA-51`, `SEA-53`, `SEA-64`
 - **Tipo**: crud-padrão
@@ -628,6 +648,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-021 — Serviço de consulta de transações
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-11`, `SEA-12`, `SEA-93`
 - **Tipo**: crud-padrão
@@ -655,6 +676,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-022 — Serviço de recategorização
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-63`, `SEA-65`, `SEA-66`, `SEA-109`
 - **Tipo**: lógica-negócio
@@ -684,6 +706,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-023 — Serviço de analytics (resumo, categorias, série mensal)
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-20`, `SEA-21`, `SEA-22`, `SEA-23`, `SEA-24`, `SEA-25`, `SEA-54`, `SEA-55`, `SEA-56`, `SEA-57`, `SEA-61`, `SEA-62`, `SEA-95`, `SEA-101`
 - **Tipo**: lógica-negócio
@@ -714,6 +737,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-024 — Endpoint POST /imports
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-07`, `SEA-08`, `SEA-35`, `SEA-42`, `SEA-43`, `SEA-45`, `SEA-90`, `SEA-91`, `SEA-92`, `SEA-104`
 - **Tipo**: crud-padrão
@@ -749,6 +773,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-025 — Endpoints de transações e recategorização
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-11`, `SEA-12`, `SEA-13`, `SEA-35`, `SEA-40`, `SEA-63`, `SEA-67`, `SEA-68`, `SEA-93`, `SEA-94`
 - **Tipo**: crud-padrão
@@ -783,6 +808,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-026 — Endpoints de categorias
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-15`, `SEA-16`, `SEA-35`, `SEA-51`, `SEA-53`
 - **Tipo**: crud-padrão
@@ -816,6 +842,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-027 — Endpoints CRUD de regras de categorização
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-18`, `SEA-35`, `SEA-48`, `SEA-49`, `SEA-50`
 - **Tipo**: crud-padrão
@@ -850,6 +877,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-028 — Endpoints de analytics
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-20`, `SEA-21`, `SEA-22`, `SEA-23`, `SEA-24`, `SEA-35`, `SEA-54`, `SEA-55`, `SEA-56`, `SEA-57`, `SEA-61`, `SEA-95`
 - **Tipo**: crud-padrão
@@ -884,6 +912,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-029 — Endpoint GET /anomalies
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-27`, `SEA-31`, `SEA-35`, `SEA-96`
 - **Tipo**: crud-padrão
@@ -917,6 +946,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-030 — Dockerfile e Docker Compose
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-01`
 - **Tipo**: infra
@@ -948,6 +978,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-031 — Pipeline de CI no GitHub Actions e README
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-01`, `SEA-04`
 - **Tipo**: infra
@@ -973,6 +1004,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-032 — CSV de exemplo e teste de aceitação ponta a ponta
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-02`, `SEA-35`
 - **Tipo**: teste

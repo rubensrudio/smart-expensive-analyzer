@@ -3,11 +3,11 @@
 Backend para importar extratos financeiros em CSV, normalizar e categorizar
 transações e disponibilizar análises de despesas por meio de uma API REST.
 
-> **Status:** projeto greenfield em fase de planejamento. A especificação está
-> concluída, mas a aplicação e os arquivos de infraestrutura descritos abaixo
-> ainda serão implementados.
+> **Aviso:** projeto mono-usuário, de demonstração e **sem autenticação**. A API
+> não deve ser exposta à internet nem a uma rede compartilhada. Veja
+> [Segurança e limitações](#segurança-e-limitações).
 
-## Funcionalidades planejadas
+## Funcionalidades
 
 - importação síncrona de arquivos CSV, com validação por linha e deduplicação;
 - categorização automática por regras configuráveis;
@@ -29,28 +29,42 @@ transações e disponibilizar análises de despesas por meio de uma API REST.
 - pytest, Ruff e mypy;
 - Docker Compose e GitHub Actions.
 
-## Segurança e escopo
+## Segurança e limitações
 
-A primeira versão é mono-usuário e **sem autenticação**. Todos os endpoints
-podem ler ou alterar dados financeiros; portanto, a API não deve ser exposta
-à internet nem vinculada a uma interface de rede pública. O ambiente Docker
-planejado publica a API somente em `127.0.0.1:8000`.
+A primeira versão é mono-usuário e **sem autenticação** (decisão LAC-01).
+Qualquer cliente que alcance a porta da API lê, cria e altera dados
+financeiros. Por isso a API não deve ser exposta à internet nem vinculada a
+uma interface de rede pública. O Docker Compose publica a API somente em
+`127.0.0.1:8000` e não publica a porta do PostgreSQL.
+
+Riscos conhecidos, aceitos para esta versão e registrados como follow-up:
+
+- **CSRF de rede local (FUP-03):** uma página maliciosa aberta no navegador
+  da mesma máquina pode enviar requisições para `http://localhost:8000`. O
+  bind em loopback não impede esse cenário.
+- **Upload sem limite antes do parse (FUP-03):** o endpoint lê no máximo
+  `MAX_UPLOAD_MB` + 1 byte e responde 413 acima do limite, mas o Starlette
+  grava o corpo multipart inteiro em arquivo temporário antes disso. Um
+  upload muito grande ocupa disco temporário antes de ser rejeitado.
+- **Custo de `/analytics/monthly` com período extremo (FUP-05, gravidade
+  alta):** a série tem um item por mês do período, sem limite. Um intervalo
+  como `0001-01-01` a `9999-12-31` gera cerca de 120 mil meses por moeda,
+  com alto custo de memória e tempo, podendo esgotar a memória do processo.
 
 Conversão cambial, interface gráfica, integração bancária/Open Finance e
 deploy em produção estão fora do escopo inicial.
 
 ## Executando com Docker
 
-Quando os arquivos de aplicação e infraestrutura estiverem implementados, os
-pré-requisitos serão Docker e Docker Compose. A inicialização completa será:
+Pré-requisitos: Docker e Docker Compose. A partir de um clone limpo:
 
 ```bash
 cp .env.example .env
 docker compose up -d --build
 ```
 
-A migração do banco será aplicada automaticamente antes da inicialização da
-API. Depois disso, estarão disponíveis:
+As migrações Alembic são aplicadas automaticamente antes da inicialização da
+API. Depois disso, ficam disponíveis:
 
 - documentação interativa: <http://localhost:8000/docs>;
 - especificação OpenAPI: <http://localhost:8000/openapi.json>;
@@ -64,8 +78,8 @@ docker compose down
 
 ## Variáveis de ambiente
 
-O arquivo `.env.example`, previsto na implementação, documentará os valores
-seguros para desenvolvimento local.
+O arquivo `.env.example` traz valores de desenvolvimento local. Copie-o para
+`.env` e troque a senha fora do ambiente local.
 
 | Variável | Obrigatória | Padrão | Descrição |
 |---|---:|---|---|
@@ -106,7 +120,7 @@ date,description,amount,merchant,currency
 Valores iguais a zero são inválidos. Linhas inválidas são rejeitadas
 individualmente, enquanto as demais continuam sendo importadas.
 
-## API planejada
+## API
 
 | Método | Rota | Finalidade |
 |---|---|---|
@@ -123,14 +137,7 @@ individualmente, enquanto as demais continuam sendo importadas.
 
 ## Desenvolvimento local
 
-Instale as ferramentas de qualidade e testes com `uv`:
-
-```bash
-uv tool install pytest && uv tool install ruff && uv tool install mypy
-```
-
-Após a criação do `pyproject.toml`, o ambiente de desenvolvimento será
-preparado com:
+Requer Python 3.12. Prepare o ambiente com:
 
 ```bash
 python3.12 -m venv .venv
@@ -138,8 +145,7 @@ source .venv/bin/activate
 python -m pip install -e ".[dev]"
 ```
 
-Os testes de integração usam PostgreSQL real por meio de Testcontainers; por
-isso, exigem Docker em execução. Para verificar o projeto:
+Para verificar o projeto:
 
 ```bash
 ruff check . --output-format=concise
@@ -147,12 +153,24 @@ mypy app
 pytest -q
 ```
 
-O pytest produzirá o relatório JUnit em `reports/junit.xml`. No CI, a variável
-opcional `TEST_DATABASE_URL` apontará para o PostgreSQL efêmero do workflow.
+O pytest usa o `pytest.ini` da raiz (`pythonpath = .`, `--import-mode=importlib`)
+e grava o relatório JUnit em `reports/junit.xml`.
 
-## Arquitetura planejada
+Os testes de integração usam PostgreSQL real por meio de Testcontainers e
+exigem Docker em execução. Com colima, pode ser necessário apontar o socket:
 
-O projeto seguirá Clean Architecture, com dependências direcionadas ao
+```bash
+TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock pytest -q
+```
+
+Se a variável `TEST_DATABASE_URL` estiver definida, os testes usam esse banco
+em vez de subir um contêiner. O CI (GitHub Actions, `.github/workflows/ci.yml`)
+roda `ruff`, `mypy` e `pytest` a cada push e pull request, com um serviço
+`postgres:16-alpine`, e também valida o build da imagem da API.
+
+## Arquitetura
+
+O projeto segue Clean Architecture, com dependências direcionadas ao
 domínio:
 
 ```text
@@ -164,6 +182,5 @@ app/
 └── main.py                 # composição da aplicação FastAPI
 ```
 
-A persistência utilizará Repository Pattern e Unit of Work. Configurações
-virão de variáveis de ambiente, e as migrações serão gerenciadas pelo
-Alembic.
+A persistência usa Repository Pattern e Unit of Work. As configurações vêm
+de variáveis de ambiente, e as migrações são gerenciadas pelo Alembic.
