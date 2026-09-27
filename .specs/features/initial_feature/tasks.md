@@ -773,6 +773,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-025 — Endpoints de transações e recategorização
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-11`, `SEA-12`, `SEA-13`, `SEA-35`, `SEA-40`, `SEA-63`, `SEA-67`, `SEA-68`, `SEA-93`, `SEA-94`
 - **Tipo**: crud-padrão
