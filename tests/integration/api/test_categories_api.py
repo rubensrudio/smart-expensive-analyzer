@@ -158,6 +158,35 @@ def test_post_non_string_name_returns_422_validation_error(client: TestClient, n
     assert body["details"][0]["field"] == "body.name"
 
 
+@pytest.mark.parametrize(
+    "name",
+    ["Tra\u0000nsporte", "\u0000", "Tra\u0007nsporte", "Transporte\u007f", "Tra\u009bnsporte"],
+    ids=["nul-inside", "nul-only", "bell", "del", "c1-csi"],
+)
+def test_post_name_with_control_char_returns_422_validation_error(
+    client: TestClient, engine: Engine, name: str
+) -> None:
+    # Achado TASK-026-1: o PostgreSQL recusa NUL em texto (DataError -> 500).
+    before = _count_categories(engine)
+
+    response = client.post("/categories", json={"name": name})
+
+    assert response.status_code == 422
+    body = response.json()
+    assert body["code"] == "VALIDATION_ERROR"
+    assert body["details"][0]["field"] == "body.name"
+    assert "\u0000" not in response.text
+    assert _count_categories(engine) == before
+
+
+def test_post_name_with_inner_tab_and_newline_is_normalized(client: TestClient) -> None:
+    # Cc de espaço (\t, \n, \r) seguem tratados como espaço pela normalização.
+    response = client.post("/categories", json={"name": "Lazer\t\ne\r\nCultura"})
+
+    assert response.status_code == 201
+    assert response.json()["name"] == "Lazer e Cultura"
+
+
 def test_post_invalid_json_returns_422_validation_error(client: TestClient) -> None:
     response = client.post(
         "/categories", content=b"{name: ", headers={"Content-Type": "application/json"}
