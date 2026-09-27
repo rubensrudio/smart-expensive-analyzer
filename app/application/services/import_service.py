@@ -33,15 +33,20 @@ logger = logging.getLogger(__name__)
 FILENAME_MAX_LENGTH: Final = 255
 FAILURE_REASON_MAX_LENGTH: Final = 500
 _BYTES_PER_MB: Final = 1024 * 1024
+# Cc = controles (NUL, \n, \r...); Zl/Zp = U+2028/U+2029.
+_STRIPPED_CATEGORIES: Final = frozenset({"Cc", "Zl", "Zp"})
 
 
 def _clean_filename(filename: str) -> str:
-    """Remove caracteres de controle e trunca em 255.
+    """Remove controles e separadores de linha/parágrafo e trunca em 255.
 
-    O PostgreSQL recusa NUL em texto, e quebras de linha no nome forjariam linhas
-    de log. O nome limpo é o gravado, o logado e o devolvido.
+    O PostgreSQL recusa NUL em texto, e quebras de linha no nome (inclusive
+    U+2028/U+2029) forjariam linhas de log. O nome limpo é o gravado, o logado e
+    o devolvido.
     """
-    printable = "".join(ch for ch in filename if unicodedata.category(ch) != "Cc")
+    printable = "".join(
+        ch for ch in filename if unicodedata.category(ch) not in _STRIPPED_CATEGORIES
+    )
     return printable[:FILENAME_MAX_LENGTH]
 
 
@@ -145,6 +150,9 @@ class ImportService:
                 )
                 for row in outcome.unique
             ]
+            # Ordem global por chave: imports paralelos com chaves em comum travam as
+            # tuplas do índice único na mesma ordem e não entram em deadlock (SEA-98).
+            items.sort(key=lambda item: item.dedup_key)
             inserted = uow.transactions.insert_ignoring_duplicates(items) if items else 0
 
             status = (

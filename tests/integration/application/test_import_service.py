@@ -106,7 +106,7 @@ def test_rows_are_normalized_and_merchant_falls_back_sea09_sea37(
         rows = conn.execute(
             text(
                 "SELECT description, merchant, amount::text, currency, type "
-                "FROM transactions ORDER BY id"
+                "FROM transactions ORDER BY description"
             )
         ).all()
     assert [tuple(r) for r in rows] == [
@@ -277,8 +277,8 @@ def test_structural_errors_create_nothing_sea90_sea92(
 def test_long_filename_is_truncated_to_255(
     uow_factory: UoWFactory, settings: Settings, engine: Engine
 ) -> None:
-    """Seção 7 do plan: filename VARCHAR(255) truncado; controles removidos."""
-    name = "\x00a\nb" + "n" * 400 + ".csv"
+    """Seção 7 do plan: filename VARCHAR(255) truncado; controles e U+2028/U+2029 removidos."""
+    name = "\x00a\nb\u2028\u2029" + "n" * 400 + ".csv"
     record = _service(uow_factory, settings).import_csv(name, _csv("2026-01-01,A,-1.00,,"))
 
     assert record.filename == ("ab" + "n" * 400)[:255]
@@ -307,12 +307,12 @@ def test_rule_categorizes_matching_rows_sea17(
         rows = conn.execute(
             text(
                 "SELECT t.description, c.name FROM transactions t "
-                "JOIN categories c ON c.id = t.category_id ORDER BY t.id"
+                "JOIN categories c ON c.id = t.category_id ORDER BY t.description"
             )
         ).all()
     assert [tuple(r) for r in rows] == [
-        ("UBER TRIP", "Transporte"),
         ("PADARIA", "Não categorizada"),
+        ("UBER TRIP", "Transporte"),
     ]
 
 
@@ -496,6 +496,27 @@ def test_parallel_imports_of_different_files_are_independent_sea98(
             engine, "SELECT count(*) FROM transactions WHERE import_id = :i", i=record.id
         )
         assert linked == expected
+
+
+def test_parallel_overlapping_files_in_reverse_order_do_not_deadlock_sea98(
+    uow_factory: UoWFactory, settings: Settings, engine: Engine
+) -> None:
+    """SEA-98: 3000 chaves em comum em ordens inversas, em paralelo → sem deadlock nem 503."""
+    common = [
+        f"2026-05-{d % 28 + 1:02d},COMUM {d},-{d % 97 + 1}.{d % 100:02d},," for d in range(3000)
+    ]
+    file_a = _csv(*common, "2026-06-01,SO A,-1.00,,")
+    file_b = _csv(*reversed(common), "2026-06-02,SO B,-1.00,,")
+
+    results = _run_parallel(_service(uow_factory, settings), [("a.csv", file_a), ("b.csv", file_b)])
+
+    record_a, record_b = results
+    assert isinstance(record_a, ImportRecord), repr(record_a)
+    assert isinstance(record_b, ImportRecord), repr(record_b)
+    assert record_a.imported_count + record_b.imported_count == 3002
+    assert record_a.duplicate_count + record_b.duplicate_count == 3000
+    assert _count(engine, "transactions") == 3002
+    assert [status for status, _, _ in _imports(engine)] == ["concluida", "concluida"]
 
 
 def test_parallel_imports_of_same_content_never_duplicate_sea106(
