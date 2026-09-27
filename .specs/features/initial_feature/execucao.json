@@ -1,7 +1,7 @@
 {
  "versao": 2,
  "feature": "initial_feature",
- "gerado_em": "2026-09-26T22:13:05",
+ "gerado_em": "2026-09-26T22:42:35",
  "hashes": {
   "plan": "f2117cdf238f4a54",
   "tasks": "b0924305d58a65b6"
@@ -162,7 +162,8 @@
     "app/application/services/__init__.py",
     "app/infrastructure/__init__.py",
     "app/infrastructure/db/__init__.py",
-    "app/infrastructure/db/repositories/__init__.py"
+    "app/infrastructure/db/repositories/__init__.py",
+    ".gitignore"
    ],
    "contratos": [
     "CT-2"
@@ -1290,12 +1291,16 @@
     "TASK-012"
    ],
    "producao": [
-    "docker-compose.yml"
+    "docker-compose.yml",
+    "Dockerfile"
    ],
    "teste": [
     "tests/unit/infra/test_docker_files.py"
    ],
-   "wiring": [],
+   "wiring": [
+    ".env.example",
+    ".dockerignore"
+   ],
    "contratos": [
     "CT-26",
     "CT-5"
@@ -1421,6 +1426,11 @@
    "risco_max": "médio",
    "gatilhos_previstos": {
     "G2": {
+     "CT-23": [
+      "TASK-007",
+      "TASK-008",
+      "TASK-009"
+     ],
      "CT-5": [
       "TASK-007",
       "TASK-008",
@@ -1433,11 +1443,6 @@
       "TASK-014"
      ],
      "CT-4": [
-      "TASK-007",
-      "TASK-008",
-      "TASK-009"
-     ],
-     "CT-23": [
       "TASK-007",
       "TASK-008",
       "TASK-009"
@@ -1484,7 +1489,7 @@
    "risco_max": "médio",
    "gatilhos_previstos": {
     "G2": {
-     "CT-9": [
+     "CT-23": [
       "TASK-012",
       "TASK-018",
       "TASK-020",
@@ -1495,7 +1500,7 @@
       "TASK-020",
       "TASK-021"
      ],
-     "CT-23": [
+     "CT-9": [
       "TASK-012",
       "TASK-018",
       "TASK-020",
@@ -1595,11 +1600,11 @@
    "risco_max": "médio",
    "gatilhos_previstos": {
     "G2": {
-     "CT-9": [
+     "CT-23": [
       "TASK-022",
       "TASK-023"
      ],
-     "CT-23": [
+     "CT-9": [
       "TASK-022",
       "TASK-023"
      ],

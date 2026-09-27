@@ -228,3 +228,21 @@ Etapa: gate de clarificação do spec (spec-writer, 1ª passada) · Data: 2026-0
 - **Recomendação do orquestrador**: A
 - **Escolha**: A
 - **Observações**: requer atualização de tasks.md (Wiring da TASK-027), feita pelo humano com check_plan. O contrato do repositório (CT-7/CT-8) não muda: update devolve entidade ou None, delete devolve bool.
+
+### FUP-04 — `period_params` aceita datas em modo lax (etapa: /implement, QA RIGOROSO da onda 11)
+- **Data**: 2026-09-26
+- **Contexto**: `period_params` (CT-22, TASK-011, app/api/params.py) aceita `start_date=0`, que vira 1970-01-01, e datetimes com `Z`. Com parâmetro repetido, vale o último valor. O 8.1 diz "formato inválido → 422". Não gera 500 nem vaza dados. O arquivo está fora do escopo das tasks de router que o consomem (TASK-025, 028 e 029).
+- **Decisão**: registrado como follow-up pelo orquestrador, sem mudar o escopo. Impacto baixo. Segue a mesma linha das escolhas humanas em FUP-01 a FUP-03.
+- **Observações**: correção sugerida é validar `date` em modo estrito no CT-22. Requer atualização de plan (CT-22) numa próxima iteração. Nota menor: `AnomalyOut.method` poderia ser `Literal["IQR"]`.
+
+### TOOL-01 — check_plan.py ignorava arquivos sem extensão e dotfiles (etapa: /implement, aceite da TASK-030)
+- **Data**: 2026-09-26
+- **Contexto**: a regex de `Task.lista` em ~/.claude/skills/hm-spec-quality/scripts/check_plan.py só reconhecia caminhos com "/" ou com extensão de 1 a 5 letras. Por isso `Dockerfile`, `.dockerignore` e `.env.example` da TASK-030 apareciam como "fora do escopo".
+- **Escolha humana**: o orquestrador corrige a regex.
+- **Aplicado**: além da regex antiga, passa a valer o primeiro token entre crases de cada item de lista. O backup ficou em check_plan.py.bak-2026-09-26. O execucao.json foi regenerado com `--repo` apontando para a raiz do repositório. Ondas e hashes não mudaram. Diferenças: TASK-030 ganhou Dockerfile, .env.example e .dockerignore; TASK-001, já fechada, ganhou .gitignore.
+
+### ENV-02 — Shim de `docker compose` para o run.py (etapa: /implement, aceite da TASK-030)
+- **Data**: 2026-09-26
+- **Contexto**: o plugin `docker compose` não existe nesta máquina, mas existe o `docker-compose` standalone v5.5.1.
+- **Escolha humana**: shim usado só pelo run.py.
+- **Aplicado**: um script `docker` no scratchpad da sessão repassa `docker compose ...` para `docker-compose ...` e o resto para o docker real. Ele só entra no PATH das chamadas do run.py. O sistema não foi alterado. O build do baseline continua quebrado em develop, porque o Dockerfile não existe lá, então o gate de build segue cego até a feature ser mergeada.
