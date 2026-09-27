@@ -676,6 +676,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-022 — Serviço de recategorização
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-63`, `SEA-65`, `SEA-66`, `SEA-109`
 - **Tipo**: lógica-negócio
@@ -705,6 +706,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-023 — Serviço de analytics (resumo, categorias, série mensal)
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-20`, `SEA-21`, `SEA-22`, `SEA-23`, `SEA-24`, `SEA-25`, `SEA-54`, `SEA-55`, `SEA-56`, `SEA-57`, `SEA-61`, `SEA-62`, `SEA-95`, `SEA-101`
 - **Tipo**: lógica-negócio
@@ -942,6 +944,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-030 — Dockerfile e Docker Compose
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-01`
 - **Tipo**: infra

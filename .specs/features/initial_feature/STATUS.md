@@ -1,6 +1,6 @@
 # STATUS — initial_feature
 
-Atualizado em 2026-09-26T22:35:33 · integradora `feature/initial_feature-integration` · baseline `develop@1eb44f0` (2026-09-26)
+Atualizado em 2026-09-26T22:48:19 · integradora `feature/initial_feature-integration` · baseline `develop@8a7a5a6` (2026-09-26)
 
 ## Baseline
 
@@ -26,7 +26,7 @@ Atualizado em 2026-09-26T22:35:33 · integradora `feature/initial_feature-integr
 | 9 | TASK-026 | ✅ ⚠️cego | G1, G4, G5 | RIGOROSO: APROVADO |
 | 10 | TASK-027 | ✅ ⚠️cego | G1, G3, G4, G5 | RIGOROSO: APROVADO |
 | 11 | TASK-029 | ✅ ⚠️cego | G1, G3, G4 | RIGOROSO: APROVADO |
-| 12 | TASK-022, TASK-023, TASK-030 | — | — | — |
+| 12 | TASK-022, TASK-023, TASK-030 | ✅ | G2 | PADRAO: APROVADO |
 | 13 | TASK-025 | — | — | — |
 | 14 | TASK-028 | — | — | — |
 | 15 | TASK-031, TASK-032 | — | — | — |
@@ -56,22 +56,22 @@ Atualizado em 2026-09-26T22:35:33 · integradora `feature/initial_feature-integr
 | TASK-019 | ✅ APROVADA | alto | 0/0/1 |  |
 | TASK-020 | ✅ APROVADA | médio | 0/0/0 |  |
 | TASK-021 | ✅ APROVADA | médio | 0/0/0 |  |
-| TASK-022 |  PENDENTE | médio | 0/0/0 |  |
-| TASK-023 |  PENDENTE | médio | 0/0/0 |  |
+| TASK-022 | ✅ APROVADA | médio | 0/0/0 |  |
+| TASK-023 | ✅ APROVADA | médio | 0/0/0 |  |
 | TASK-024 | ✅ APROVADA | alto | 0/0/0 |  |
 | TASK-025 |  PENDENTE | alto | 0/0/0 |  |
 | TASK-026 | ✅ APROVADA | alto | 0/0/1 |  |
 | TASK-027 | ✅ APROVADA | alto | 1/0/1 |  |
 | TASK-028 |  PENDENTE | alto | 0/0/0 |  |
 | TASK-029 | ✅ APROVADA | alto | 0/0/0 |  |
-| TASK-030 |  PENDENTE | médio | 0/0/0 |  |
+| TASK-030 | ✅ APROVADA | médio | 0/0/0 |  |
 | TASK-031 |  PENDENTE | baixo | 0/0/0 |  |
 | TASK-032 |  PENDENTE | baixo | 0/0/0 |  |
 
 ## Métricas
 
-- Aprovadas: 25/32 · bloqueadas: 0
-- Aprovadas em 1ª rodada: 22/25
-- Ondas fechadas: 11 · QA semântico invocado em 11
+- Aprovadas: 28/32 · bloqueadas: 0
+- Aprovadas em 1ª rodada: 25/28
+- Ondas fechadas: 12 · QA semântico invocado em 12
 - Regressões capturadas pelo gate mecânico: 0
 - Testes e2e de regressão criados a partir de achados do QA: 0
