@@ -978,6 +978,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-031 — Pipeline de CI no GitHub Actions e README
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-01`, `SEA-04`
 - **Tipo**: infra
@@ -1003,6 +1004,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-032 — CSV de exemplo e teste de aceitação ponta a ponta
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-02`, `SEA-35`
 - **Tipo**: teste
