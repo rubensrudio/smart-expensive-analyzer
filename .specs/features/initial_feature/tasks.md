@@ -839,6 +839,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-027 — Endpoints CRUD de regras de categorização
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-18`, `SEA-35`, `SEA-48`, `SEA-49`, `SEA-50`
 - **Tipo**: crud-padrão
