@@ -228,3 +228,9 @@ Etapa: gate de clarificação do spec (spec-writer, 1ª passada) · Data: 2026-0
 - **Recomendação do orquestrador**: A
 - **Escolha**: A
 - **Observações**: requer atualização de tasks.md (Wiring da TASK-027), feita pelo humano com check_plan. O contrato do repositório (CT-7/CT-8) não muda: update devolve entidade ou None, delete devolve bool.
+
+### FUP-04 — `period_params` aceita datas em modo lax (etapa: /implement, QA RIGOROSO da onda 11)
+- **Data**: 2026-09-26
+- **Contexto**: `period_params` (CT-22, TASK-011, app/api/params.py) aceita `start_date=0`, que vira 1970-01-01, e datetimes com `Z`. Com parâmetro repetido, vale o último valor. O 8.1 diz "formato inválido → 422". Não gera 500 nem vaza dados. O arquivo está fora do escopo das tasks de router que o consomem (TASK-025, 028 e 029).
+- **Decisão**: registrado como follow-up pelo orquestrador, sem mudar o escopo. Impacto baixo. Segue a mesma linha das escolhas humanas em FUP-01 a FUP-03.
+- **Observações**: correção sugerida é validar `date` em modo estrito no CT-22. Requer atualização de plan (CT-22) numa próxima iteração. Nota menor: `AnomalyOut.method` poderia ser `Literal["IQR"]`.
