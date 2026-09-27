@@ -853,6 +853,8 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
   - `tests/integration/api/test_categorization_rules_api.py`
 - **Wiring permitido**:
   - `app/main.py` (apenas importar o router e `app.include_router`)
+  - `app/infrastructure/db/repositories/categorization_rules.py` (só update e delete atômicos)
+  - `tests/integration/api/test_categorization_rules_api.py` (inclui os testes de concorrência de update e delete)
 - **Reusa**:
   - `app/api/deps.py` → `get_uow`
   - fixture `client` de `tests/integration/conftest.py`

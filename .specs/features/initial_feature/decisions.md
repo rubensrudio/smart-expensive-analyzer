@@ -220,3 +220,11 @@ Etapa: gate de clarificação do spec (spec-writer, 1ª passada) · Data: 2026-0
 - **Recomendação do orquestrador**: A
 - **Escolha**: A
 - **Observações**: correção sugerida: middleware ASGI que responde 413 FILE_TOO_LARGE pelo Content-Length ou pela contagem do stream, acima de MAX_UPLOAD_MB + a folga do multipart, com teste por socket. Registrar o risco de CSRF de rede local no README (TASK-031). Requer atualização de plan (DA-12/DA-13) numa próxima iteração.
+
+### SCOPE-02 — Corrida entre PUT e DELETE de regra devolve 500 (etapa: /implement, QA RIGOROSO da onda 10, TASK-027)
+- **Data**: 2026-09-26
+- **Contexto**: em PUT e DELETE simultâneos na mesma regra, a API devolve 500 (StaleDataError) em 41 de 100 corridas. O contrato 8.3 manda 404 RULE_NOT_FOUND. Em DELETE contra DELETE, os dois respondem 204. A causa é o update/delete não atômico em `app/infrastructure/db/repositories/categorization_rules.py` (TASK-007), arquivo fora do escopo da TASK-027.
+- **Opções apresentadas**: A) o humano amplia o Wiring da TASK-027 para incluir o repositório e o teste de concorrência B) registrar como follow-up e aceitar o risco C) bloquear a TASK-027
+- **Recomendação do orquestrador**: A
+- **Escolha**: A
+- **Observações**: requer atualização de tasks.md (Wiring da TASK-027), feita pelo humano com check_plan. O contrato do repositório (CT-7/CT-8) não muda: update devolve entidade ou None, delete devolve bool.
