@@ -212,3 +212,11 @@ Etapa: gate de clarificação do spec (spec-writer, 1ª passada) · Data: 2026-0
 - **Recomendação do orquestrador**: A
 - **Escolha**: A
 - **Observações**: correção sugerida: obter o advisory lock (815001) antes de `list_expenses` no recompute_all. Requer atualização de plan (DA-7) numa próxima iteração.
+
+### FUP-03 — Corpo de upload sem limite antes do parse multipart (AS-6) (etapa: /implement, QA RIGOROSO da onda 8)
+- **Data**: 2026-09-26
+- **Contexto**: o POST /imports lê no máximo MAX_UPLOAD_MB + 1 byte, mas o Starlette grava o multipart inteiro num SpooledTemporaryFile antes do endpoint. O QA mediu 18,8 MB em disco temporário com 30 MB enviados. Pela LAC-01/DA-12, a gravidade é BAIXA. O SEA-104 é cumprido como está escrito. Há também um risco de CSRF de rede local: uma página maliciosa pode fazer POST para localhost, o que vale para todo o AS-6.
+- **Opções apresentadas**: A) registrar como follow-up B) corrigir nesta feature com uma task nova ou ampliada
+- **Recomendação do orquestrador**: A
+- **Escolha**: A
+- **Observações**: correção sugerida: middleware ASGI que responde 413 FILE_TOO_LARGE pelo Content-Length ou pela contagem do stream, acima de MAX_UPLOAD_MB + a folga do multipart, com teste por socket. Registrar o risco de CSRF de rede local no README (TASK-031). Requer atualização de plan (DA-12/DA-13) numa próxima iteração.
