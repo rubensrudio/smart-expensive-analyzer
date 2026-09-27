@@ -4,19 +4,28 @@ Requisitos: SEA-18, SEA-35, SEA-48, SEA-49, SEA-50, SEA-64.
 """
 
 import logging
-from collections.abc import Iterator
+import threading
+from collections import Counter
+from collections.abc import Callable, Iterator
+from contextlib import contextmanager
 from datetime import datetime
 from typing import Any, NoReturn
 
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from sqlalchemy import Engine, text
+from sqlalchemy import Engine, event, text
 from sqlalchemy.exc import OperationalError
+from sqlalchemy.orm import Session, sessionmaker
+from starlette.types import ASGIApp
 
 from app.api.routers.categorization_rules import get_categorization_rule_service
 from app.core.config import Settings
 from app.domain.entities import CategorizationRule
+from app.domain.ports import UnitOfWork
+from app.infrastructure.db.repositories.categorization_rules import (
+    SqlAlchemyCategorizationRuleRepository,
+)
 from app.main import create_app
 
 BASE = "/categorization-rules"
@@ -583,6 +592,155 @@ def test_rule_changes_do_not_recategorize_existing_transactions(
     assert categories() == before
     assert client.delete(f"{BASE}/{rule_id}").status_code == 204
     assert categories() == before
+
+
+# --- concorrência (achado QA TASK-027-1) -------------------------------------------
+
+RACE_ROUNDS = 30
+
+
+def _race(app: ASGIApp, requests: list[tuple[str, str, dict[str, Any] | None]]) -> list[Any]:
+    """Dispara as requisições ao mesmo tempo, cada uma na sua thread e no seu client."""
+    barrier = threading.Barrier(len(requests))
+    results: list[Any] = [None] * len(requests)
+
+    def go(index: int, method: str, url: str, body: dict[str, Any] | None) -> None:
+        worker = TestClient(app, raise_server_exceptions=False)
+        barrier.wait()
+        results[index] = worker.request(method, url, json=body)
+
+    threads = [
+        threading.Thread(target=go, args=(index, *request))
+        for index, request in enumerate(requests)
+    ]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+    return results
+
+
+def test_concurrent_put_and_delete_never_return_500(client: TestClient, engine: Engine) -> None:
+    category_id = _category(client)
+    seen: Counter[tuple[str, int]] = Counter()
+
+    for _ in range(RACE_ROUNDS):
+        rule_id = _rule(client, category_id)
+        url = f"{BASE}/{rule_id}"
+        put_body = {"keyword": "z", "category_id": category_id, "priority": 2}
+        put, delete = _race(client.app, [("PUT", url, put_body), ("DELETE", url, None)])
+
+        seen[("PUT", put.status_code)] += 1
+        seen[("DELETE", delete.status_code)] += 1
+        assert delete.status_code == 204
+        assert put.status_code in (200, 404), put.text
+        if put.status_code == 404:
+            assert put.json() == RULE_NOT_FOUND_BODY
+    assert _count_rules(engine) == 0
+    assert seen[("DELETE", 204)] == RACE_ROUNDS
+
+
+def test_concurrent_deletes_return_exactly_one_204_and_one_404(
+    client: TestClient, engine: Engine
+) -> None:
+    category_id = _category(client)
+
+    for _ in range(RACE_ROUNDS):
+        rule_id = _rule(client, category_id)
+        url = f"{BASE}/{rule_id}"
+        responses = _race(client.app, [("DELETE", url, None), ("DELETE", url, None)])
+
+        assert sorted(r.status_code for r in responses) == [204, 404]
+        not_found = next(r for r in responses if r.status_code == 404)
+        assert not_found.json() == RULE_NOT_FOUND_BODY
+    assert _count_rules(engine) == 0
+
+
+def test_concurrent_puts_all_succeed(client: TestClient, engine: Engine) -> None:
+    category_id = _category(client)
+    rule_id = _rule(client, category_id)
+    url = f"{BASE}/{rule_id}"
+    bodies = [{"keyword": f"k{i}", "category_id": category_id, "priority": i} for i in range(3)]
+
+    responses = _race(client.app, [("PUT", url, body) for body in bodies])
+
+    assert [r.status_code for r in responses] == [200, 200, 200]
+    keyword, _category_id, priority = _stored_rule(engine, rule_id)
+    assert (keyword, priority) in {(b["keyword"], b["priority"]) for b in bodies}
+
+
+# Interleaving determinístico no repositório: logo antes do UPDATE/DELETE da sessão A
+# chegar ao banco, outra transação apaga a regra e faz commit.
+
+
+@contextmanager
+def _rules_repo_with_delete_before_write(
+    session_factory: sessionmaker[Session],
+    uow_factory: Callable[[], UnitOfWork],
+    rule_id: int,
+) -> Iterator[SqlAlchemyCategorizationRuleRepository]:
+    deleted: list[bool] = []
+
+    def delete_first(_conn: Any, _cursor: Any, statement: str, *_args: Any) -> None:
+        if deleted or not statement.lstrip().upper().startswith(("UPDATE", "DELETE")):
+            return
+        with uow_factory() as other:
+            deleted.append(other.rules.delete(rule_id))
+            other.commit()
+
+    with session_factory() as session:
+        event.listen(session.connection(), "before_cursor_execute", delete_first)
+        yield SqlAlchemyCategorizationRuleRepository(session)
+        session.rollback()
+    assert deleted == [True]
+
+
+def test_repository_update_after_concurrent_delete_returns_none(
+    client: TestClient,
+    session_factory: sessionmaker[Session],
+    uow_factory: Callable[[], UnitOfWork],
+) -> None:
+    category_id = _category(client)
+    rule_id = _rule(client, category_id)
+
+    with _rules_repo_with_delete_before_write(session_factory, uow_factory, rule_id) as rules:
+        assert rules.get(rule_id) is not None
+        assert rules.update(rule_id, "z", category_id, 2) is None
+
+
+def test_repository_delete_after_concurrent_delete_returns_false(
+    client: TestClient,
+    session_factory: sessionmaker[Session],
+    uow_factory: Callable[[], UnitOfWork],
+) -> None:
+    category_id = _category(client)
+    rule_id = _rule(client, category_id)
+
+    with _rules_repo_with_delete_before_write(session_factory, uow_factory, rule_id) as rules:
+        assert rules.get(rule_id) is not None
+        assert rules.delete(rule_id) is False
+
+
+def test_repository_update_returns_fresh_entity_and_refreshes_session(
+    client: TestClient, uow_factory: Callable[[], UnitOfWork]
+) -> None:
+    category_id = _category(client)
+    rule_id = _rule(client, category_id, "uber", priority=10)
+
+    with uow_factory() as uow:
+        before = uow.rules.get(rule_id)
+        assert before is not None
+        updated = uow.rules.update(rule_id, "ifood", category_id, -3)
+        assert updated is not None
+        assert (updated.id, updated.keyword, updated.category_id, updated.priority) == (
+            rule_id,
+            "ifood",
+            category_id,
+            -3,
+        )
+        assert updated.created_at == before.created_at
+        assert uow.rules.get(rule_id) == updated
+        uow.commit()
 
 
 # --- AS-3 / AS-6 --------------------------------------------------------------------
