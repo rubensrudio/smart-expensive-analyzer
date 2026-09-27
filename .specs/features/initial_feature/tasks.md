@@ -575,6 +575,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-019 — Serviço de importação de CSV
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-07`, `SEA-08`, `SEA-14`, `SEA-17`, `SEA-41`, `SEA-42`, `SEA-43`, `SEA-44`, `SEA-45`, `SEA-60`, `SEA-97`, `SEA-98`, `SEA-102`, `SEA-103`, `SEA-104`, `SEA-106`, `SEA-107`
 - **Tipo**: lógica-negócio
