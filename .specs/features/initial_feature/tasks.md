@@ -735,6 +735,7 @@ estão NÃO. AS-3 é ancorada pela TASK-019 e AS-6 pelas TASK-024 a TASK-029.
 ---
 
 ### TASK-024 — Endpoint POST /imports
+- **Status**: ✅ APROVADA em 2026-09-26
 
 - **Requisito**: `SEA-07`, `SEA-08`, `SEA-35`, `SEA-42`, `SEA-43`, `SEA-45`, `SEA-90`, `SEA-91`, `SEA-92`, `SEA-104`
 - **Tipo**: crud-padrão
